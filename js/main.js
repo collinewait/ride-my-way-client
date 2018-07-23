@@ -1,7 +1,3 @@
-// Get the element with id="defaultOpen" and click on it
-document.getElementById('defaultOpen').click(); 
-
-/* exported openDriverAction */
 function openDriverAction(evt, driverAction) {
     
     // Declare all variables
@@ -24,6 +20,17 @@ function openDriverAction(evt, driverAction) {
     evt.currentTarget.className += ' active';
 
 }
+
+let offersTab = document.getElementById('defaultOpen'),
+requestsTab = document.getElementById('requests_button'),
+addRideTab = document.getElementById('add_ride_button'),
+allRidesTab = document.getElementById('all_rides_button');
+
+offersTab.addEventListener('click', () => openDriverAction(event, 'view_offers'));
+offersTab.click();
+requestsTab.addEventListener('click', () => openDriverAction(event, 'view_requests'));
+addRideTab.addEventListener('click', () => openDriverAction(event, 'add_ride'));
+allRidesTab.addEventListener('click', () => openDriverAction(event, 'all_rides'));
 
 //modal
 // Get the modal

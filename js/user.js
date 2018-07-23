@@ -1,3 +1,4 @@
+import {Alert} from './dialogs.js';
 const password = document.getElementById('user__password');
 const confirm_password = document.getElementById('cpassword');
 
@@ -37,16 +38,15 @@ function addUser(e){
         .then((res) => {
             if(res.status=='400'){
                 console.log(data);
-                alert('Sorry, User already exists');
+                Alert.render('Sorry, Email already exists');
             }
             else if (res.status=='201'){
                 console.log(data);
-                alert('You have successfully registered. You can login');
-                window.location.href = 'index.html';
+                Alert.render('You have successfully registered. You can login');
             }
         })
         .catch(error => {
             console.log('Failure', error);
-            alert('Something wrong happened, Please try again.');
+            Alert.render('Something wrong happened, Please try again.');
         });
 }
