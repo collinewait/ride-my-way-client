@@ -22,9 +22,9 @@ function openDriverAction(evt, driverAction) {
 }
 
 let offersTab = document.getElementById('defaultOpen'),
-requestsTab = document.getElementById('requests_button'),
-addRideTab = document.getElementById('add_ride_button'),
-allRidesTab = document.getElementById('all_rides_button');
+    requestsTab = document.getElementById('requests_button'),
+    addRideTab = document.getElementById('add_ride_button'),
+    allRidesTab = document.getElementById('all_rides_button');
 
 offersTab.addEventListener('click', () => openDriverAction(event, 'view_offers'));
 offersTab.click();
