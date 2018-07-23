@@ -1,4 +1,5 @@
 import {Alert} from './dialogs.js';
+import {myCookie} from './cookie_file.js';
 document.getElementById('login_user').addEventListener('submit', loginUser);
 function loginUser(e){
     e.preventDefault();
@@ -18,16 +19,20 @@ function loginUser(e){
     })
         .then((res) => {
             if(res.status=='401'){
-                console.log(data);
                 Alert.render('Incorrect email address or password');
             }
             else if (res.status=='200'){
-                console.log(res.json);
                 window.location.href = 'user.html';
             }
+            return res.json();
+        })
+        .then(result => {
+            console.log(result.auth_token);
+            myCookie.setCookie("auth_token", result.auth_token, 2);
+            console.log(myCookie.getCookie("auth_token"));
         })
         .catch(error => {
             console.log('Failure', error);
             Alert.render('Something wrong happened, Please try again.');
-        });
+       });
 }
