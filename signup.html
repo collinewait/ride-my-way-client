@@ -21,16 +21,24 @@
 
     <main>
         <section class="content">
+            <div id="dialogoverlay"></div>
+                <div id="dialogbox">
+                    <div id="dialog_container">
+                        <div id="dialogboxhead"></div>
+                        <div id="dialogboxbody"></div>
+                        <div id="dialogboxfoot"></div>
+                    </div>
+                </div>
             <div id="sign_in_container">
                 <div class="form_container">
                     <h2>Create your Ride My Way Account</h2>
-                    <form action="index.html">
+                    <form id="signup">
                         <div class="row">
                             <div class="col-25">
                                 <label for="fname">First name</label>
                             </div>
                             <div class="col-75">
-                                <input type="text" id="fname"name="firstname" placeholder="Your first name" autofocus required/>
+                                <input type="text" id="fname" name="firstname" placeholder="Your first name" autofocus required/>
                             </div>
                         </div>
                         <div class="row">
@@ -47,6 +55,14 @@
                             </div>
                             <div class="col-75">
                                 <input type="email" id="email" name="email" placeholder="Your email address" required/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                    <label for="email">Phone number</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="tel" id="phone_no" name="phone_number" placeholder="Your Phone number" minlength="10" maxlength="13" required/>
                             </div>
                         </div>
                         <div class="row">
@@ -84,6 +100,8 @@
             <p>Ride My Way, Copyright &copy; 2018</p>
         </footer>
     </main>
+    <script src="js/dialogs.js" type="module"></script>
+    <script src="js/user.js" type="module"></script>
     
 </body>
 </html>

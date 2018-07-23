@@ -111,6 +111,9 @@
   .header__logout{
     font-size: 1.5em;
   }
+  #dialogbox{
+    margin: 10%;
+  }
 }
 
 @media screen and (min-width: 401px) and (max-width: 600px){
@@ -123,5 +126,14 @@
   }
   .abbr {
     display: inline;
+  }
+  #dialogbox{
+    margin: 10%;
+  }
+}
+
+@media screen and (min-width: 800px){
+  #dialogbox{
+    width: 620px;
   }
 }

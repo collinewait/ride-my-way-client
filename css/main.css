@@ -67,7 +67,7 @@ header, footer, section, div {
  * 
  */
 /* Style inputs, select elements, password and email */
-input[type=text], select, input[type=password], input[type=email], input[type=date], input[type=time]{
+input[type=text], select, input[type=password], input[type=email], input[type=date], input[type=time], input[type=tel]{
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -269,7 +269,7 @@ input[type=reset] {
     cursor: pointer;
 }
 
-#accept, #view_details, #ride_request{
+#accept, #view_details, #ride_request, #ok_button{
     background-color: #35424a;
     color: white;
     padding: 0.7em;
@@ -283,7 +283,7 @@ input[type=reset] {
 }
 
 /* The Modal (background) */
-.modal {
+.modal, #dialogoverlay {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -348,4 +348,36 @@ input[type=reset] {
 #demo_link{
     padding: 3%;
     text-align: center
+}
+
+/**sign up dialog for messages*/
+
+#dialogbox{
+    display: none;
+    position: fixed;
+    margin:10%;
+    background-color: #fefefe;
+    border: 1px solid #888;
+    width: 80%;
+    padding: 20px;
+    z-index: 1;
+}
+
+#dialogbox #dialog_container #dialogboxhead{
+    background: rgb(13, 27, 34);
+    font-weight: 300px;
+    text-align: center;
+    padding: 10px;
+    color: #fff
+}
+#dialogbox #dialog_container #dialogboxbody{
+    background: #78909C; 
+    text-align: center;
+    padding: 20px; color
+    : #fff
+}
+#dialogbox #dialog_container #dialogboxfoot{
+    background: #f1f1f1;
+     padding: 10px; 
+     text-align: right;
 }

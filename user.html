@@ -38,10 +38,10 @@
                 <div id="driver_container">
                     <!-- Tab menu-->
                     <div class="tab">
-                        <button class="tablinks" id="defaultOpen" onclick="openDriverAction(event, 'view_offers')">View Offers</button>
-                        <button class="tablinks" onclick="openDriverAction(event, 'view_requests')">View Requests</button>
-                        <button class="tablinks" onclick="openDriverAction(event, 'add_ride')">+Add Ride</button>
-                        <button class="tablinks" onclick="openDriverAction(event, 'all_rides')">All Rides</button>
+                        <button class="tablinks" id="defaultOpen">View Offers</button>
+                        <button class="tablinks" id="requests_button">View Requests</button>
+                        <button class="tablinks" id="add_ride_button">+Add Ride</button>
+                        <button class="tablinks" id="all_rides_button">All Rides</button>
                     </div>
                     <!-- Tab content containg available ride offers-->
                     <div id="view_offers" class="tabcontent">
@@ -290,7 +290,7 @@
             <p>Ride My Way, Copyright &copy; 2018</p>
         </footer>
     </main>
-    <script src="js/main.js"></script>
+    <script src="js/main.js" type="module"></script>
 </body>
 
 </html>
