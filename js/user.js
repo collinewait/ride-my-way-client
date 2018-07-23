@@ -50,3 +50,5 @@ function addUser(e){
             Alert.render('Something wrong happened, Please try again.');
         });
 }
+
+
