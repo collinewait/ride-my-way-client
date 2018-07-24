@@ -1,9 +1,12 @@
 import {Alert} from './dialogs.js';
 import {myCookie} from './cookie_file.js';
 document.getElementById('login_user').addEventListener('submit', loginUser);
+let loader = document.getElementById('loader');
+
 function loginUser(e){
     e.preventDefault();
 
+    loader.style.display = 'block';
     let email_address = document.getElementById('email_address').value;
     let password = document.getElementById('password').value;
     const data = {email_address, password};
@@ -17,22 +20,22 @@ function loginUser(e){
         cache: 'no-cache',
         body: JSON.stringify(data)
     })
-        .then((res) => {
-            if(res.status=='401'){
-                Alert.render('Incorrect email address or password');
-            }
-            else if (res.status=='200'){
+        .then((res) => res.json())
+        .then(result => {
+            if(result.status === 'success'){
+                myCookie.setCookie("auth_token", result.auth_token, 2);
+                console.log(myCookie.getCookie("auth_token"));
                 window.location.href = 'user.html';
             }
-            return res.json();
-        })
-        .then(result => {
-            console.log(result.auth_token);
-            myCookie.setCookie("auth_token", result.auth_token, 2);
-            console.log(myCookie.getCookie("auth_token"));
+            else{
+                loader.style.display = 'none';
+                Alert.render('Incorrect email address or password');
+            }
+            
         })
         .catch(error => {
-            console.log('Failure', error);
+            console.error(error);
+            loader.style.display = 'none';
             Alert.render('Something wrong happened, Please try again.');
        });
 }
