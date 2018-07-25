@@ -23,6 +23,9 @@
     
     .forgot_password{order: 1;}
     .reset{order: 1}
+    .forgot_password a{
+      padding: 0.3em 1.5em 1.5em 1.5em
+    }
   }
 
 @media screen and (min-width: 850px) {
@@ -42,6 +45,9 @@
     }
     .abbr {
       display: none;
+    }
+    .forgot_password a{
+      padding: 0.3em 1.5em 1.5em 1.5em
     }
 }
 
@@ -73,6 +79,9 @@
     }
     .abbr {
       display: none;
+    }
+    .forgot_password a{
+      padding: 0.3em 1.5em 1.5em 1.5em
     }
 }
 

@@ -18,19 +18,27 @@
             </h1>
         </div>
     </header>
-
+    <div id="loader"></div>
     <main>
         <section class="content">
+            <div id="dialogoverlay"></div>
+                <div id="dialogbox">
+                    <div id="dialog_container">
+                        <div id="dialogboxhead"></div>
+                        <div id="dialogboxbody"></div>
+                        <div id="dialogboxfoot"></div>
+                    </div>
+                </div>
             <div id="log_in_container">
               <div class="form_container">
                 <h2>Log in</h2>
-                <form action="user.html">
+                <form id="login_user">
                     <div class="row">
                         <div class="col-25">
                              <label for="email">Email Address</label>
                         </div>
                         <div class="col-75">
-                            <input type="email" id="fname"name="email" placeholder="Your email address" autofocus required>
+                            <input type="email" id="email_address" name="email" placeholder="Your email address" autofocus required>
                         </div>
                     </div>
                     <div class="row">
@@ -57,6 +65,8 @@
         </div>
         </section>
     </main>
+    <script src="js/dialogs.js" type="module"></script>
+    <script src="js/login.js" type="module"></script>
     
 </body>
 </html>

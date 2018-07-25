@@ -1,4 +1,4 @@
-function openDriverAction(evt, driverAction) {
+function openDriverAction(event, driverAction) {
     
     // Declare all variables
     let i, tabcontent, tablinks;
@@ -17,7 +17,7 @@ function openDriverAction(evt, driverAction) {
 
     // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(driverAction).style.display = 'block';
-    evt.currentTarget.className += ' active';
+    event.className += ' active';
 
 }
 
@@ -26,11 +26,11 @@ let offersTab = document.getElementById('defaultOpen'),
     addRideTab = document.getElementById('add_ride_button'),
     allRidesTab = document.getElementById('all_rides_button');
 
-offersTab.addEventListener('click', () => openDriverAction(event, 'view_offers'));
+offersTab.addEventListener('click', () => openDriverAction(offersTab, 'view_offers'));
 offersTab.click();
-requestsTab.addEventListener('click', () => openDriverAction(event, 'view_requests'));
-addRideTab.addEventListener('click', () => openDriverAction(event, 'add_ride'));
-allRidesTab.addEventListener('click', () => openDriverAction(event, 'all_rides'));
+requestsTab.addEventListener('click', () => openDriverAction(requestsTab, 'view_requests'));
+addRideTab.addEventListener('click', () => openDriverAction(addRideTab, 'add_ride'));
+allRidesTab.addEventListener('click', () => openDriverAction(allRidesTab, 'all_rides'));
 
 //modal
 // Get the modal
