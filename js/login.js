@@ -23,8 +23,8 @@ function loginUser(e){
         .then((res) => res.json())
         .then(result => {
             if(result.status === 'success'){
-                myCookie.setCookie("auth_token", result.auth_token, 2);
-                console.log(myCookie.getCookie("auth_token"));
+                myCookie.setCookie('auth_token', result.auth_token, 2);
+                console.log(myCookie.getCookie('auth_token'));
                 window.location.href = 'user.html';
             }
             else{
@@ -37,5 +37,5 @@ function loginUser(e){
             console.error(error);
             loader.style.display = 'none';
             Alert.render('Something wrong happened, Please try again.');
-       });
+        });
 }
