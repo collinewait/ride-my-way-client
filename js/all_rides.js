@@ -2,10 +2,12 @@
 import {myCookie} from './cookie_file.js';
 
 document.getElementById('defaultOpen').addEventListener('click', getAllRides);
+let loader = document.getElementById('loader');
+
 document.getElementById('defaultOpen').click();
 
 function getAllRides(){
-
+    loader.style.display = 'block';
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/rides/', {
         headers: {
             'Accept': 'application/json',
@@ -27,6 +29,7 @@ function getAllRides(){
                     </tr>
                 `;
             });
+            loader.style.display = 'none';
             document.getElementById('rides_data').innerHTML = tableRows;
             makeDetailsModelActive();
         });
