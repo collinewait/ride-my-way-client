@@ -38,7 +38,7 @@ function makeDetailsModelActive() {
     const modal = document.getElementById('details_modal');
 
     // Get the button that opens the modal
-    let btns = document.querySelectorAll('.view_details');
+    let btns = document.getElementsByClassName('view_details');
     console.log(btns);
     
     // Get the <span> element that closes the modal
