@@ -23,7 +23,7 @@
             </h1>
         </div>
     </header>
-
+    <div id="loader"></div>
     <main>
         <section class="content">
             <div class="rides">
@@ -46,23 +46,17 @@
                     <!-- Tab content containg available ride offers-->
                     <div id="view_offers" class="tabcontent">
                         <h2>Available Ride Offers</h2>
-                        <div class="ride_offers">
+                        <div class="ride_offers" id="all_rides_div">
                             <table class="table_display">
                                 <thead>
                                     <tr>
                                         <th>Driver Name</th>
                                         <th>Id No.</th>
                                         <th>Action</th>
-                                    </tr>
+                                    </tr> 
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Wait</td>
-                                        <td>214</td>
-                                        <td>
-                                            <button id="view_details">View Details</button>
-                                        </td>
-                                    </tr>
+                                <tbody id="rides_data">
+                                   
                                 </tbody>
                             </table>
                         </div>
@@ -291,6 +285,7 @@
         </footer>
     </main>
     <script src="js/main.js" type="module"></script>
+    <script src="js/all_rides.js" type="module"></script>
 </body>
 
 </html>
