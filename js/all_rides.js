@@ -46,6 +46,8 @@ function getAllRides(){
         });
 }
 
+let ride_id = null;
+
 // Get the modal
 function makeDetailsModelActive() {
 
@@ -65,6 +67,7 @@ function makeDetailsModelActive() {
         el.addEventListener('click', () => {
             modal.style.display = 'block';
             getSingleRide(el.id);
+            ride_id = el.id;
         });
     });
     
@@ -119,4 +122,22 @@ function getSingleRide(rideId){
             
         });
 
+}
+
+document.getElementById('ride_request').addEventListener('click', joinARide);
+
+function joinARide(){
+    fetch(`https://carpooling-ride-my-way.herokuapp.com/api/v1/rides/${ride_id}/requests`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            'auth_token': myCookie.getCookie('auth_token')
+        },
+        cache: 'no-cache'
+    })
+    .then((res) => res.json())
+    .then((data) => {
+        console.log(data);
+    })
 }
