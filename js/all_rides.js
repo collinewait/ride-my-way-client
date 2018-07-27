@@ -1,5 +1,5 @@
 import {myCookie} from './cookie_file.js';
-
+import {Alert} from './dialogs.js';
 document.getElementById('defaultOpen').addEventListener('click', getAllRides);
 let loader = document.getElementById('loader');
 
@@ -127,6 +127,7 @@ function getSingleRide(rideId){
 document.getElementById('ride_request').addEventListener('click', joinARide);
 
 function joinARide(){
+    loader.style.display = 'block';
     fetch(`https://carpooling-ride-my-way.herokuapp.com/api/v1/rides/${ride_id}/requests`, {
         method: 'POST',
         headers: {
@@ -138,6 +139,21 @@ function joinARide(){
     })
     .then((res) => res.json())
     .then((data) => {
-        console.log(data);
+        let responseMessage = data.message;
+        if(responseMessage === 'request sent successfully'){
+            loader.style.display = 'none';
+            console.log(data);
+        }else if(responseMessage === 'Request already exists'){
+            loader.style.display = 'none';
+            Alert.render('Request already exists!');
+        }else{
+            window.location.href = 'index.html';
+        }
     })
+    .catch(error => {
+        console.error(error);
+        loader.style.display = 'none';
+        Alert.render('No network, Please try again.');
+    });
+
 }
