@@ -110,8 +110,8 @@ function getSingleRide(rideId){
                     <td>${data.ride.number_of_passengers}</td>
                 </tr>
             `;
-            loader.style.display = 'none';
-            document.getElementById('ride_data').innerHTML = tableRow;
+                loader.style.display = 'none';
+                document.getElementById('ride_data').innerHTML = tableRow;
 
             }else{
                 window.location.href = 'index.html';
@@ -119,4 +119,4 @@ function getSingleRide(rideId){
             
         });
 
-    }
+}
