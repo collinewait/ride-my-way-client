@@ -64,6 +64,7 @@ function makeDetailsModelActive() {
     [].forEach.call(btns, (el) => {
         el.addEventListener('click', () => {
             modal.style.display = 'block';
+            getSingleRide(el.id);
         });
     });
     
@@ -85,3 +86,27 @@ function makeDetailsModelActive() {
     };
 
 }
+
+function getSingleRide(rideId){
+    fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/rides/'+rideId, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            'auth_token': myCookie.getCookie('auth_token')
+        }
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            let tableRow = `
+                <tr>
+                    <td>${data.ride.departure_location}</td>
+                    <td>${data.ride.destination}</td>
+                    <td>${data.ride.departure_date}</td>
+                    <td>${data.ride.departure_time}</td>
+                    <td>${data.ride.number_of_passengers}</td>
+                </tr>
+            `;
+            document.getElementById('ride_data').innerHTML = tableRow;
+        });
+
+    }
