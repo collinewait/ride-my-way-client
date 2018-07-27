@@ -88,6 +88,7 @@ function makeDetailsModelActive() {
 }
 
 function getSingleRide(rideId){
+    loader.style.display = 'block';
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/rides/'+rideId, {
         headers: {
             'Accept': 'application/json',
@@ -106,6 +107,7 @@ function getSingleRide(rideId){
                     <td>${data.ride.number_of_passengers}</td>
                 </tr>
             `;
+            loader.style.display = 'none';
             document.getElementById('ride_data').innerHTML = tableRow;
         });
 
