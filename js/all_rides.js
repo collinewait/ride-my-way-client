@@ -98,7 +98,10 @@ function getSingleRide(rideId){
     })
         .then((res) => res.json())
         .then((data) => {
-            let tableRow = `
+            const message = 'result retrieved successfully';
+            if(data.message === message){
+
+                let tableRow = `
                 <tr>
                     <td>${data.ride.departure_location}</td>
                     <td>${data.ride.destination}</td>
@@ -109,6 +112,11 @@ function getSingleRide(rideId){
             `;
             loader.style.display = 'none';
             document.getElementById('ride_data').innerHTML = tableRow;
+
+            }else{
+                window.location.href = 'index.html';
+            }
+            
         });
 
     }
