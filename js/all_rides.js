@@ -26,7 +26,7 @@ function getAllRides(){
                                 <td>${ride.driver_name}</td>
                                 <td>${ride.driver_id}</td>
                                 <td>
-                                    <button class="view_details">View Details</button>
+                                    <button class="view_details" id="${ride.ride_id}">View Details</button>
                                 </td>
                             </tr>
                         `;
