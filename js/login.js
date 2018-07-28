@@ -24,7 +24,6 @@ function loginUser(e){
         .then(result => {
             if(result.status === 'success'){
                 myCookie.setCookie('auth_token', result.auth_token, 2);
-                console.log(myCookie.getCookie('auth_token'));
                 window.location.href = 'user.html';
             }
             else{
