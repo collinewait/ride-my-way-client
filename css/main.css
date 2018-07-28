@@ -67,7 +67,7 @@ header, footer, section, div {
  * 
  */
 /* Style inputs, select elements, password and email */
-input[type=text], select, input[type=password], input[type=email], input[type=date], input[type=time], input[type=tel]{
+input[type=text], select, input[type=password], input[type=email], input[type=date], input[type=time], input[type=tel], input[type=number]{
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
