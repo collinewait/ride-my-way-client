@@ -185,7 +185,7 @@
                     <div id="add_ride" class="tabcontent">
                         <div class="form_container">
                             <h2>Add a Ride Offer</h2>
-                            <form>
+                            <form id="add_ride_form">
                                 <div class="row">
                                     <div class="col-25">
                                         <label for="departure_location">Departure Location</label>
@@ -224,7 +224,7 @@
                                         <label for="no_of_passengers">Number of passengerss</label>
                                     </div>
                                     <div class="col-75">
-                                        <input type="text" id="no_of_passengers" name="no_of_passengers" placeholder="Enter number of passengers" required/>
+                                        <input type="number" id="no_of_passengers" name="no_of_passengers" placeholder="Enter number of passengers" required/>
                                     </div>
                                 </div>
 
@@ -288,6 +288,7 @@
     </main>
     <script src="js/main.js" type="module"></script>
     <script src="js/all_rides.js" type="module"></script>
+    <script src="js/ride.js" type="module"></script>
 </body>
 
 </html>
