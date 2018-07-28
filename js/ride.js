@@ -1,3 +1,5 @@
+import {myCookie} from './cookie_file.js';
+
 document.getElementById('add_ride_form').addEventListener('submit', addRide);
 
 function addRide(e){
@@ -12,5 +14,20 @@ function addRide(e){
     let data = {departure_location, destination, departure_date, departure_time,
          number_of_passengers};
     console.log(data);
+
+    fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/rides/', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            'auth_token': myCookie.getCookie('auth_token')
+        },
+        cache: 'no-cache',
+        body: JSON.stringify(data)
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+        } )
 
 }
