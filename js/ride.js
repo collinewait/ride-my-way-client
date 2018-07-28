@@ -1,4 +1,5 @@
 import {myCookie} from './cookie_file.js';
+import {Alert} from './dialogs.js';
 
 document.getElementById('add_ride_form').addEventListener('submit', addRide);
 
@@ -27,7 +28,19 @@ function addRide(e){
     })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data);
+            if(data.message === 'Ride added successfully'){
+                console.log(data.message)
+                Alert.render('Ride added successfully');
+            }else if(data.message === 'Ride already exists'){
+                console.log(data.message)
+                Alert.render('Ride already exists');
+            }else{
+                window.location.href = 'index.html';
+            }
         } )
+        .catch(error => {
+            console.error(error);
+            Alert.render('No network, Please try again.');
+        });
 
 }
