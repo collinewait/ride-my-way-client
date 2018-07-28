@@ -2,8 +2,10 @@ import {myCookie} from './cookie_file.js';
 import {Alert} from './dialogs.js';
 
 document.getElementById('add_ride_form').addEventListener('submit', addRide);
+let loader = document.getElementById('loader');
 
 function addRide(e){
+    loader.style.display = 'block';
     e.preventDefault();
 
     let departure_location = document.getElementById('departure_location').value,
@@ -14,7 +16,6 @@ function addRide(e){
 
     let data = {departure_location, destination, departure_date, departure_time,
          number_of_passengers};
-    console.log(data);
 
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/rides/', {
         method: 'POST',
@@ -29,10 +30,10 @@ function addRide(e){
         .then((res) => res.json())
         .then((data) => {
             if(data.message === 'Ride added successfully'){
-                console.log(data.message)
+                loader.style.display = 'none';
                 Alert.render('Ride added successfully');
             }else if(data.message === 'Ride already exists'){
-                console.log(data.message)
+                loader.style.display = 'none';
                 Alert.render('Ride already exists');
             }else{
                 window.location.href = 'index.html';
