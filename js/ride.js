@@ -45,3 +45,68 @@ function addRide(e){
         });
 
 }
+
+document.getElementById('all_rides_button').addEventListener('click', getRidesTaken);
+
+function getRidesTaken(){
+    fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/requests', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            'auth_token': myCookie.getCookie('auth_token')
+        }
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            let ridesTaken = [];
+            data.requests.forEach(ride => {
+                ridesTaken.push({
+                    "driver_name": ride.driver_name,
+                    "ride_id": ride.ride_id,
+                    "taken_given": "Taken"
+                });
+                getRidesGiven(ridesTaken);
+            });
+            
+            console.log(ridesTaken);
+        })
+}
+
+function getRidesGiven(ridesTaken){
+    fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/rides', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            'auth_token': myCookie.getCookie('auth_token')
+        }
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            let ridesGiven = [];
+            data.rides.forEach(ride => {
+                ridesGiven.push({
+                    "driver_name": ride.driver_name,
+                    "ride_id": ride.ride_id,
+                    "taken_given": "Given"
+                });
+            });
+            let rides = [...ridesTaken, ...ridesGiven];
+            displayToUser(rides);
+        })
+}
+
+function displayToUser(ridesTakenAndGiven){
+    let tableData = '';
+    ridesTakenAndGiven.forEach(ride => {
+        tableData += `
+        <tr>
+            <td>${ride.driver_name}</td>
+            <td>${ride.ride_id}</td>
+            <td>${ride.taken_given}</td>
+        </tr>
+        `;
+    });
+    document.getElementById('rides_tbody').innerHTML = tableData;
+}
