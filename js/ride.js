@@ -45,3 +45,97 @@ function addRide(e){
         });
 
 }
+
+document.getElementById('all_rides_button').addEventListener('click', getRidesTaken);
+
+function getRidesTaken(){
+    loader.style.display = 'block';
+    fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/requests', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            'auth_token': myCookie.getCookie('auth_token')
+        }
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            const message = 'Requests retrieved successfully';
+            if(data.message === message){
+                if(data.requests.length > 0){
+                    let ridesTaken = [];
+                    data.requests.forEach(ride => {
+                    ridesTaken.push({
+                        "driver_name": ride.driver_name,
+                        "ride_id": ride.ride_id,
+                        "taken_given": "Taken"
+                        });
+                    });
+                    getRidesGiven(ridesTaken);
+                }else{
+                    getRidesGiven([]);
+                }
+            }else{
+                window.location.href = 'index.html';
+            }
+            
+        })
+        .catch(error => {
+            console.error(error);
+            Alert.render('No network, Please try again.');
+        });
+}
+
+function getRidesGiven(ridesTaken){
+    fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/rides', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            'auth_token': myCookie.getCookie('auth_token')
+        }
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            const message = 'results retrieved successfully';
+            if(data.message === message){
+                if(data.rides.length > 0){
+                    let ridesGiven = [];
+                    data.rides.forEach(ride => {
+                    ridesGiven.push({
+                        "driver_name": ride.driver_name,
+                        "ride_id": ride.ride_id,
+                        "taken_given": "Given"
+                        });
+                    });
+                    let rides = [...ridesTaken, ...ridesGiven];
+                    displayToUser(rides);
+                }else if(ridesTaken.length > 0){
+                    displayToUser(ridesTaken);
+                }else{
+                    loader.style.display = 'none';
+                    document.getElementById('taken_given_div').innerHTML = '<h2>You have not Given or Taken rides yet </h2>';
+                }
+            }else{
+                window.location.href = 'index.html';
+            }
+            
+        })
+        .catch(error => {
+            console.error(error);
+            Alert.render('No network, Please try again.');
+        });
+}
+
+function displayToUser(ridesTakenAndGiven){
+    let tableData = '';
+    ridesTakenAndGiven.forEach(ride => {
+        tableData += `
+        <tr>
+            <td>${ride.driver_name}</td>
+            <td>${ride.ride_id}</td>
+            <td>${ride.taken_given}</td>
+        </tr>
+        `;
+    });
+    loader.style.display = 'none';
+    document.getElementById('rides_tbody').innerHTML = tableData;
+}
