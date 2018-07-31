@@ -75,6 +75,10 @@ function getRidesTaken(){
             }
             
         })
+        .catch(error => {
+            console.error(error);
+            Alert.render('No network, Please try again.');
+        });
 }
 
 function getRidesGiven(ridesTaken){
@@ -104,6 +108,10 @@ function getRidesGiven(ridesTaken){
             }
             
         })
+        .catch(error => {
+            console.error(error);
+            Alert.render('No network, Please try again.');
+        });
 }
 
 function displayToUser(ridesTakenAndGiven){
