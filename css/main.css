@@ -402,6 +402,6 @@ input[type=reset] {
     to{transform: rotate(360deg)}
 }
 
-#rideds_dropdown{
-    padding: 1%;
+#rides_dropdown{
+    padding: 0% 0% 1% 0%;
 }
