@@ -49,6 +49,7 @@ function addRide(e){
 document.getElementById('all_rides_button').addEventListener('click', getRidesTaken);
 
 function getRidesTaken(){
+    loader.style.display = 'block';
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/requests', {
         headers: {
             'Accept': 'application/json',
@@ -58,18 +59,21 @@ function getRidesTaken(){
     })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data);
-            let ridesTaken = [];
-            data.requests.forEach(ride => {
+            const message = 'Requests retrieved successfully';
+            if(data.message === message){
+                let ridesTaken = [];
+                data.requests.forEach(ride => {
                 ridesTaken.push({
                     "driver_name": ride.driver_name,
                     "ride_id": ride.ride_id,
                     "taken_given": "Taken"
+                    });
                 });
                 getRidesGiven(ridesTaken);
-            });
+            }else{
+                window.location.href = 'index.html';
+            }
             
-            console.log(ridesTaken);
         })
 }
 
@@ -83,17 +87,22 @@ function getRidesGiven(ridesTaken){
     })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data);
-            let ridesGiven = [];
-            data.rides.forEach(ride => {
+            const message = 'results retrieved successfully';
+            if(data.message === message){
+                let ridesGiven = [];
+                data.rides.forEach(ride => {
                 ridesGiven.push({
                     "driver_name": ride.driver_name,
                     "ride_id": ride.ride_id,
                     "taken_given": "Given"
+                    });
                 });
-            });
-            let rides = [...ridesTaken, ...ridesGiven];
-            displayToUser(rides);
+                let rides = [...ridesTaken, ...ridesGiven];
+                displayToUser(rides);
+            }else{
+                window.location.href = 'index.html';
+            }
+            
         })
 }
 
@@ -108,5 +117,6 @@ function displayToUser(ridesTakenAndGiven){
         </tr>
         `;
     });
+    loader.style.display = 'none';
     document.getElementById('rides_tbody').innerHTML = tableData;
 }
