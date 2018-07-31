@@ -160,11 +160,12 @@ function getUserRideOffers(){
                     let rideNumber = 0;
                     data.rides.forEach(ride => {
                         rideOptions += `
-                            <option value=${ride.ride_id}>Ride ${rideNumber + 1}</option>
+                            <option value=${ride.ride_id}>Ride ${rideNumber += 1}</option>
                         `;
                     });
                     loader.style.display = 'none';
                     document.getElementById('ride_offer').innerHTML = rideOptions;
+                    getRideRequests();
                     
                 }else{
                     loader.style.display = 'none';
@@ -179,4 +180,50 @@ function getUserRideOffers(){
             console.error(error);
             Alert.render('No network, Please try again.');
         });
+}
+
+let selectElement = document.getElementById('ride_offer');
+selectElement.addEventListener('change', getRideRequests);
+
+function getRideRequests(){
+    let requestMessage = document.getElementById('ride_request_message');
+    let requestsDiv = document.getElementById('requests_div');
+    requestMessage.style.display = 'none'; 
+    fetch(`https://carpooling-ride-my-way.herokuapp.com/api/v1/users/rides/${selectElement.value}/requests`, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            'auth_token': myCookie.getCookie('auth_token')
+        }
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            const message = 'result retrieved successfully';
+            if(data.message === message){
+                if(data.requests.length > 0){
+                    let RequestRows = '';
+                    data.requests.forEach(request => {
+                        RequestRows += `
+                            <tr>
+                                <td>${request.passenger_name}</td>
+                                <td>${request.request_status}</td>
+                                <td>
+                                    <button type="button" id="${request.request_id}" class="accept">Accept</button>
+                                </td>
+                                <td>
+                                    <button type="button" id="${request.request_id}" class="reject">Reject</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    loader.style.display = 'none';
+                    document.getElementById('ride_requests').innerHTML = RequestRows;
+                    requestsDiv.style.display = 'block';
+                }else{
+                    requestsDiv.style.display = 'none';
+                    requestMessage.innerHTML = 'No requests made on the ride yet.';
+                    requestMessage.style.display = 'block'; 
+                }
+            }
+        })
 }
