@@ -143,6 +143,7 @@ function displayToUser(ridesTakenAndGiven){
 document.getElementById('requests_button').addEventListener('click', getUserRideOffers);
 
 function getUserRideOffers(){
+    loader.style.display = 'block';
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/rides', {
         headers: {
             'Accept': 'application/json',
@@ -162,9 +163,11 @@ function getUserRideOffers(){
                             <option value=${ride.ride_id}>Ride ${rideNumber + 1}</option>
                         `;
                     });
+                    loader.style.display = 'none';
                     document.getElementById('ride_offer').innerHTML = rideOptions;
                     
                 }else{
+                    loader.style.display = 'none';
                     document.getElementById('requests_div').innerHTML = '<h2>You have not offered rides yet. Requests can not be made. </h2>';
                 }
             }else{
