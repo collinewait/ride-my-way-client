@@ -7,6 +7,8 @@ document.getElementById('defaultOpen').click();
 
 function getAllRides(){
     loader.style.display = 'block';
+    let rideOffersMessage = document.getElementById('ride_offers_message');
+    let allRidesDiv = document.getElementById('all_rides_div');
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/rides/', {
         headers: {
             'Accept': 'application/json',
@@ -33,10 +35,13 @@ function getAllRides(){
                     });
                     loader.style.display = 'none';
                     document.getElementById('rides_data').innerHTML = tableRows;
+                    allRidesDiv.style.display = 'block';
                     makeDetailsModelActive();
                 }else{
                     loader.style.display = 'none';
-                    document.getElementById('all_rides_div').innerHTML = '<h2>No rides currently available</h2>';
+                    allRidesDiv.style.display = 'none';
+                    rideOffersMessage.innerHTML = 'No rides currently available';
+                    rideOffersMessage.style.display = 'block';
                 }
             
             }else{
