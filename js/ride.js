@@ -239,6 +239,8 @@ function getRideRequests(){
                     requestMessage.innerHTML = 'No requests made on the ride yet.';
                     requestMessage.style.display = 'block'; 
                 }
+            }else{
+                window.location.href = 'index.html';
             }
         })
         .catch(error => {
