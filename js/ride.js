@@ -139,3 +139,41 @@ function displayToUser(ridesTakenAndGiven){
     loader.style.display = 'none';
     document.getElementById('rides_tbody').innerHTML = tableData;
 }
+
+document.getElementById('requests_button').addEventListener('click', getUserRideOffers);
+
+function getUserRideOffers(){
+    fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/rides', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            'auth_token': myCookie.getCookie('auth_token')
+        }
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            const message = 'results retrieved successfully';
+            if(data.message === message){
+                if(data.rides.length > 0){
+                    let rideOptions = '';
+                    let rideNumber = 0;
+                    data.rides.forEach(ride => {
+                        rideOptions += `
+                            <option value=${ride.ride_id}>Ride ${rideNumber + 1}</option>
+                        `;
+                    });
+                    document.getElementById('ride_offer').innerHTML = rideOptions;
+                    
+                }else{
+                    document.getElementById('requests_div').innerHTML = '<h2>You have not offered rides yet. Requests can not be made. </h2>';
+                }
+            }else{
+                window.location.href = 'index.html';
+            }
+            
+        })
+        .catch(error => {
+            console.error(error);
+            Alert.render('No network, Please try again.');
+        });
+}
