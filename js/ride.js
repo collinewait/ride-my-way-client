@@ -86,6 +86,8 @@ function getRidesTaken(){
 }
 
 function getRidesGiven(ridesTaken){
+    let ridedsMessage = document.getElementById('rides_taken_given_message');
+    let ridesDiv =  document.getElementById('taken_given_div');
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/rides', {
         headers: {
             'Accept': 'application/json',
@@ -112,7 +114,9 @@ function getRidesGiven(ridesTaken){
                     displayToUser(ridesTaken);
                 }else{
                     loader.style.display = 'none';
-                    document.getElementById('taken_given_div').innerHTML = '<h2>You have not Given or Taken rides yet </h2>';
+                    ridesDiv.style.display = 'none'; 
+                    ridedsMessage.innerHTML = 'You have not Given or Taken rides yet';
+                    ridedsMessage.style.display = 'block';
                 }
             }else{
                 window.location.href = 'index.html';
@@ -126,6 +130,7 @@ function getRidesGiven(ridesTaken){
 }
 
 function displayToUser(ridesTakenAndGiven){
+    let ridesDiv =  document.getElementById('taken_given_div');
     let tableData = '';
     ridesTakenAndGiven.forEach(ride => {
         tableData += `
@@ -138,12 +143,16 @@ function displayToUser(ridesTakenAndGiven){
     });
     loader.style.display = 'none';
     document.getElementById('rides_tbody').innerHTML = tableData;
+    ridesDiv.style.display = 'block';
 }
 
 document.getElementById('requests_button').addEventListener('click', getUserRideOffers);
 
 function getUserRideOffers(){
     loader.style.display = 'block';
+    let requestMessage = document.getElementById('ride_request_message');
+    let requestsDiv = document.getElementById('requests_div');
+    requestMessage.style.display = 'none'; 
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/rides', {
         headers: {
             'Accept': 'application/json',
@@ -165,11 +174,14 @@ function getUserRideOffers(){
                     });
                     loader.style.display = 'none';
                     document.getElementById('ride_offer').innerHTML = rideOptions;
+                    requestsDiv.style.display = 'block';
                     getRideRequests();
                     
                 }else{
                     loader.style.display = 'none';
-                    document.getElementById('requests_div').innerHTML = '<h2>You have not offered rides yet. Requests can not be made. </h2>';
+                    requestsDiv.style.display = 'none';
+                    requestMessage.innerHTML = 'You have not offered rides yet. Requests can not be made.';
+                    requestMessage.style.display = 'block'; 
                 }
             }else{
                 window.location.href = 'index.html';
