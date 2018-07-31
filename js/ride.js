@@ -186,6 +186,7 @@ let selectElement = document.getElementById('ride_offer');
 selectElement.addEventListener('change', getRideRequests);
 
 function getRideRequests(){
+    loader.style.display = 'block';
     let requestMessage = document.getElementById('ride_request_message');
     let requestsDiv = document.getElementById('requests_div');
     requestMessage.style.display = 'none'; 
@@ -220,6 +221,7 @@ function getRideRequests(){
                     document.getElementById('ride_requests').innerHTML = RequestRows;
                     requestsDiv.style.display = 'block';
                 }else{
+                    loader.style.display = 'none';
                     requestsDiv.style.display = 'none';
                     requestMessage.innerHTML = 'No requests made on the ride yet.';
                     requestMessage.style.display = 'block'; 
