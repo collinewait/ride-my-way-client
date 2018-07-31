@@ -228,4 +228,8 @@ function getRideRequests(){
                 }
             }
         })
+        .catch(error => {
+            console.error(error);
+            Alert.render('No network, Please try again.');
+        });
 }
