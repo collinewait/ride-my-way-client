@@ -212,6 +212,7 @@ function getRideRequests(){
         .then((res) => res.json())
         .then((data) => {
             const message = 'result retrieved successfully';
+            console.log(selectElement.value);
             if(data.message === message){
                 if(data.requests.length > 0){
                     let RequestRows = '';

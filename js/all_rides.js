@@ -147,7 +147,7 @@ function joinARide(){
         let responseMessage = data.message;
         if(responseMessage === 'request sent successfully'){
             loader.style.display = 'none';
-            console.log(data);
+            Alert.render('Request sent successfully!');
         }else if(responseMessage === 'Request already exists'){
             loader.style.display = 'none';
             Alert.render('Request already exists!');
