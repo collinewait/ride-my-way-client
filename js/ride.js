@@ -61,15 +61,19 @@ function getRidesTaken(){
         .then((data) => {
             const message = 'Requests retrieved successfully';
             if(data.message === message){
-                let ridesTaken = [];
-                data.requests.forEach(ride => {
-                ridesTaken.push({
-                    "driver_name": ride.driver_name,
-                    "ride_id": ride.ride_id,
-                    "taken_given": "Taken"
+                if(data.requests.length > 0){
+                    let ridesTaken = [];
+                    data.requests.forEach(ride => {
+                    ridesTaken.push({
+                        "driver_name": ride.driver_name,
+                        "ride_id": ride.ride_id,
+                        "taken_given": "Taken"
+                        });
                     });
-                });
-                getRidesGiven(ridesTaken);
+                    getRidesGiven(ridesTaken);
+                }else{
+                    getRidesGiven([]);
+                }
             }else{
                 window.location.href = 'index.html';
             }
@@ -93,16 +97,23 @@ function getRidesGiven(ridesTaken){
         .then((data) => {
             const message = 'results retrieved successfully';
             if(data.message === message){
-                let ridesGiven = [];
-                data.rides.forEach(ride => {
-                ridesGiven.push({
-                    "driver_name": ride.driver_name,
-                    "ride_id": ride.ride_id,
-                    "taken_given": "Given"
+                if(data.rides.length > 0){
+                    let ridesGiven = [];
+                    data.rides.forEach(ride => {
+                    ridesGiven.push({
+                        "driver_name": ride.driver_name,
+                        "ride_id": ride.ride_id,
+                        "taken_given": "Given"
+                        });
                     });
-                });
-                let rides = [...ridesTaken, ...ridesGiven];
-                displayToUser(rides);
+                    let rides = [...ridesTaken, ...ridesGiven];
+                    displayToUser(rides);
+                }else if(ridesTaken.length > 0){
+                    displayToUser(ridesTaken);
+                }else{
+                    loader.style.display = 'none';
+                    document.getElementById('taken_given_div').innerHTML = '<h2>You have not Given or Taken rides yet </h2>';
+                }
             }else{
                 window.location.href = 'index.html';
             }
