@@ -247,3 +247,31 @@ function activateButtons(buttonAction){
         });
     });
 }
+
+document.getElementById('log_out').addEventListener('click', logoutUser);
+
+function logoutUser(e){
+    e.preventDefault();
+    loader.style.display = 'block';
+    fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/users/logout', {
+        method: 'POST',
+        headers: siteHeaders,
+        cache: 'no-cache'
+    })
+        .then((res) => res.json())
+        .then(data => {
+            const message = 'You are logged out successfully';
+            if(data.message === message){
+                loader.style.display = 'none';
+                goToLogin();
+            }else{
+                loader.style.display = 'none';
+                goToLogin();
+            }
+            
+        })
+        .catch(() => {
+            showNoNetwork(loader);
+        });
+
+}
