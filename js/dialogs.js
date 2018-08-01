@@ -1,3 +1,4 @@
+import {goToLogin} from './reusable.js';
 class CustomAlert{
 
     render(dialog_message){
@@ -18,7 +19,7 @@ class CustomAlert{
         let button = document.getElementById('ok_button');
         let message = 'You have successfully registered. You can login';
         if(dialog_message === message){
-            window.location.href = 'index.html';
+            goToLogin();
         }else{
             button.parentNode.removeChild(button);
             document.getElementById('dialogbox').style.display = 'none';
