@@ -1,6 +1,7 @@
 import {Alert} from './dialogs.js';
 const password = document.getElementById('user__password');
 const confirm_password = document.getElementById('cpassword');
+let loader = document.getElementById('loader');
 
 function validatePassword() {
     'use strict';
@@ -18,7 +19,7 @@ document.getElementById('signup').addEventListener('submit', addUser);
 
 function addUser(e){
     e.preventDefault();
-
+    loader.style.display = 'block';
     let first_name = document.getElementById('fname').value;
     let last_name = document.getElementById('lname').value;
     let email_address = document.getElementById('email').value;
@@ -37,16 +38,17 @@ function addUser(e){
     })
         .then((res) => {
             if(res.status=='400'){
-                console.log(data);
+                loader.style.display = 'none';
                 Alert.render('Sorry, Email already exists');
             }
             else if (res.status=='201'){
-                console.log(data);
+                loader.style.display = 'none';
                 Alert.render('You have successfully registered. You can login');
             }
         })
         .catch(error => {
             console.log('Failure', error);
+            loader.style.display = 'none';
             Alert.render('Something wrong happened, Please try again.');
         });
 }
