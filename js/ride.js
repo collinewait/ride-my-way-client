@@ -201,6 +201,7 @@ function getRideRequests(){
 }
 
 function acceptRjectRequest(rideId, requestId, data){
+    loader.style.display = 'block';
     fetch(`https://carpooling-ride-my-way.herokuapp.com/api/v1/users/rides/${rideId}/requests/${requestId}`, {
         method: 'PUT',
         headers: siteHeaders,
@@ -211,8 +212,10 @@ function acceptRjectRequest(rideId, requestId, data){
         .then(result => {
             if(result){
                 if(data.request_status === 'Accepted'){
+                    loader.style.display = 'none';
                     Alert.render('Request accepted successfully');
                 }else{
+                    loader.style.display = 'none';
                     Alert.render('Request rejected successfully');
                 }
             }else{
