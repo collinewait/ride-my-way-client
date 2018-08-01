@@ -260,7 +260,7 @@ input[type=reset] {
     background-color: #eceff1;
 }
 
-#reject, #cancel_request{
+.reject, #cancel_request{
     background-color: #ed8153;
     color: white;
     padding: 0.7em;
@@ -269,7 +269,7 @@ input[type=reset] {
     cursor: pointer;
 }
 
-#accept, .view_details, #ride_request, #ok_button{
+.accept, .view_details, #ride_request, #ok_button{
     background-color: #35424a;
     color: white;
     padding: 0.7em;
@@ -400,4 +400,12 @@ input[type=reset] {
 @keyframes spin{
     from{transform: rotate(0deg)}
     to{transform: rotate(360deg)}
+}
+
+#rides_dropdown{
+    padding: 0% 0% 1% 0%;
+}
+
+#tabcontent #ride_request_message{
+    display: none;
 }

@@ -1,4 +1,4 @@
-import {myCookie} from './cookie_file.js';
+import {siteHeaders, goToLogin, showNoNetwork, noContentFound, displayTableData} from './reusable.js';
 import {Alert} from './dialogs.js';
 
 document.getElementById('add_ride_form').addEventListener('submit', addRide);
@@ -9,21 +9,17 @@ function addRide(e){
     e.preventDefault();
 
     let departure_location = document.getElementById('departure_location').value,
-    destination = document.getElementById('destination').value,
-    departure_date = document.getElementById('departure_date').value,
-    departure_time = document.getElementById('departure_time').value,
-    number_of_passengers = parseInt(document.getElementById('no_of_passengers').value);
+        destination = document.getElementById('destination').value,
+        departure_date = document.getElementById('departure_date').value,
+        departure_time = document.getElementById('departure_time').value,
+        number_of_passengers = parseInt(document.getElementById('no_of_passengers').value);
 
     let data = {departure_location, destination, departure_date, departure_time,
-         number_of_passengers};
+        number_of_passengers};
 
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/rides/', {
         method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json',
-            'auth_token': myCookie.getCookie('auth_token')
-        },
+        headers: siteHeaders,
         cache: 'no-cache',
         body: JSON.stringify(data)
     })
@@ -36,12 +32,11 @@ function addRide(e){
                 loader.style.display = 'none';
                 Alert.render('Ride already exists');
             }else{
-                window.location.href = 'index.html';
+                goToLogin();
             }
         } )
-        .catch(error => {
-            console.error(error);
-            Alert.render('No network, Please try again.');
+        .catch(() => {
+            showNoNetwork(loader);
         });
 
 }
@@ -51,11 +46,7 @@ document.getElementById('all_rides_button').addEventListener('click', getRidesTa
 function getRidesTaken(){
     loader.style.display = 'block';
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/requests', {
-        headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json',
-            'auth_token': myCookie.getCookie('auth_token')
-        }
+        headers: siteHeaders
     })
         .then((res) => res.json())
         .then((data) => {
@@ -64,34 +55,29 @@ function getRidesTaken(){
                 if(data.requests.length > 0){
                     let ridesTaken = [];
                     data.requests.forEach(ride => {
-                    ridesTaken.push({
-                        "driver_name": ride.driver_name,
-                        "ride_id": ride.ride_id,
-                        "taken_given": "Taken"
-                        });
+                        ridesTaken.push(
+                            {
+                                'driver_name': ride.driver_name,
+                                'ride_id': ride.ride_id,
+                                'taken_given': 'Taken'
+                            });
                     });
                     getRidesGiven(ridesTaken);
                 }else{
                     getRidesGiven([]);
                 }
             }else{
-                window.location.href = 'index.html';
+                goToLogin();
             }
             
-        })
-        .catch(error => {
-            console.error(error);
-            Alert.render('No network, Please try again.');
         });
 }
 
 function getRidesGiven(ridesTaken){
+    let ridedsMessage = document.getElementById('rides_taken_given_message');
+    let ridesDiv =  document.getElementById('taken_given_div');
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/rides', {
-        headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json',
-            'auth_token': myCookie.getCookie('auth_token')
-        }
+        headers: siteHeaders
     })
         .then((res) => res.json())
         .then((data) => {
@@ -100,10 +86,10 @@ function getRidesGiven(ridesTaken){
                 if(data.rides.length > 0){
                     let ridesGiven = [];
                     data.rides.forEach(ride => {
-                    ridesGiven.push({
-                        "driver_name": ride.driver_name,
-                        "ride_id": ride.ride_id,
-                        "taken_given": "Given"
+                        ridesGiven.push({
+                            'driver_name': ride.driver_name,
+                            'ride_id': ride.ride_id,
+                            'taken_given': 'Given'
                         });
                     });
                     let rides = [...ridesTaken, ...ridesGiven];
@@ -111,21 +97,17 @@ function getRidesGiven(ridesTaken){
                 }else if(ridesTaken.length > 0){
                     displayToUser(ridesTaken);
                 }else{
-                    loader.style.display = 'none';
-                    document.getElementById('taken_given_div').innerHTML = '<h2>You have not Given or Taken rides yet </h2>';
+                    noContentFound(loader, ridesDiv, ridedsMessage, 'You have not Given or Taken rides yet');
                 }
             }else{
-                window.location.href = 'index.html';
+                goToLogin();
             }
             
-        })
-        .catch(error => {
-            console.error(error);
-            Alert.render('No network, Please try again.');
         });
 }
 
 function displayToUser(ridesTakenAndGiven){
+    let ridesDiv =  document.getElementById('taken_given_div');
     let tableData = '';
     ridesTakenAndGiven.forEach(ride => {
         tableData += `
@@ -136,6 +118,82 @@ function displayToUser(ridesTakenAndGiven){
         </tr>
         `;
     });
-    loader.style.display = 'none';
-    document.getElementById('rides_tbody').innerHTML = tableData;
+    displayTableData(loader, 'rides_tbody', tableData, ridesDiv);
+}
+
+document.getElementById('requests_button').addEventListener('click', getUserRideOffers);
+
+function getUserRideOffers(){
+    loader.style.display = 'block';
+    let requestMessage = document.getElementById('ride_request_message');
+    let requestsDiv = document.getElementById('requests_div');
+    requestMessage.style.display = 'none'; 
+    fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/rides', {
+        headers: siteHeaders
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            const message = 'results retrieved successfully';
+            if(data.message === message){
+                if(data.rides.length > 0){
+                    let rideOptions = '';
+                    let rideNumber = 0;
+                    data.rides.forEach(ride => {
+                        rideOptions += `
+                            <option value=${ride.ride_id}>Ride ${rideNumber += 1}</option>
+                        `;
+                    });
+                    displayTableData(loader, 'ride_offer', rideOptions, requestsDiv);
+                    getRideRequests();
+                    
+                }else{
+                    const displayMessage = 'You have not offered rides yet. Requests can not be made.';
+                    noContentFound(loader, requestsDiv, requestMessage, displayMessage);
+                }
+            }else{
+                goToLogin();
+            }
+            
+        });
+}
+
+let selectElement = document.getElementById('ride_offer');
+selectElement.addEventListener('change', getRideRequests);
+
+function getRideRequests(){
+    loader.style.display = 'block';
+    let requestMessage = document.getElementById('ride_request_message');
+    let requestsDiv = document.getElementById('requests_div');
+    requestMessage.style.display = 'none'; 
+    fetch(`https://carpooling-ride-my-way.herokuapp.com/api/v1/users/rides/${selectElement.value}/requests`, {
+        headers: siteHeaders
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            const message = 'result retrieved successfully';
+            if(data.message === message){
+                if(data.requests.length > 0){
+                    let RequestRows = '';
+                    data.requests.forEach(request => {
+                        RequestRows += `
+                            <tr>
+                                <td>${request.passenger_name}</td>
+                                <td>${request.request_status}</td>
+                                <td>
+                                    <button type="button" id="${request.request_id}" class="accept">Accept</button>
+                                </td>
+                                <td>
+                                    <button type="button" id="${request.request_id}" class="reject">Reject</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    displayTableData(loader, 'ride_requests', RequestRows, requestsDiv);
+                }else{
+                    noContentFound(loader, requestsDiv, requestMessage, 'No requests made on the ride yet.');
+                }
+            }else{
+                goToLogin();
+            }
+        });
 }

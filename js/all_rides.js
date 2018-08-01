@@ -1,5 +1,5 @@
-import {myCookie} from './cookie_file.js';
 import {Alert} from './dialogs.js';
+import {siteHeaders, goToLogin, showNoNetwork, noContentFound, displayTableData} from './reusable.js';
 document.getElementById('defaultOpen').addEventListener('click', getAllRides);
 let loader = document.getElementById('loader');
 
@@ -7,12 +7,10 @@ document.getElementById('defaultOpen').click();
 
 function getAllRides(){
     loader.style.display = 'block';
+    let rideOffersMessage = document.getElementById('ride_offers_message');
+    let allRidesDiv = document.getElementById('all_rides_div');
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/rides/', {
-        headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json',
-            'auth_token': myCookie.getCookie('auth_token')
-        }
+        headers: siteHeaders
     })
         .then((res) => res.json())
         .then((data) => {
@@ -31,17 +29,14 @@ function getAllRides(){
                             </tr>
                         `;
                     });
-                    loader.style.display = 'none';
-                    document.getElementById('rides_data').innerHTML = tableRows;
+                    displayTableData(loader, 'rides_data', tableRows, allRidesDiv);
                     makeDetailsModelActive();
                 }else{
-                    loader.style.display = 'none';
-                    document.getElementById('all_rides_div').innerHTML = '<h2>No rides currently available</h2>';
+                    noContentFound(loader, allRidesDiv, rideOffersMessage, 'No rides currently available');
                 }
             
             }else{
-                
-                window.location.href = 'index.html';
+                goToLogin();
             }
         });
 }
@@ -93,11 +88,7 @@ function makeDetailsModelActive() {
 function getSingleRide(rideId){
     loader.style.display = 'block';
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/rides/'+rideId, {
-        headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json',
-            'auth_token': myCookie.getCookie('auth_token')
-        }
+        headers: siteHeaders
     })
         .then((res) => res.json())
         .then((data) => {
@@ -117,7 +108,7 @@ function getSingleRide(rideId){
                 document.getElementById('ride_data').innerHTML = tableRow;
 
             }else{
-                window.location.href = 'index.html';
+                goToLogin();
             }
             
         });
@@ -130,30 +121,24 @@ function joinARide(){
     loader.style.display = 'block';
     fetch(`https://carpooling-ride-my-way.herokuapp.com/api/v1/rides/${ride_id}/requests`, {
         method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json',
-            'auth_token': myCookie.getCookie('auth_token')
-        },
+        headers: siteHeaders,
         cache: 'no-cache'
     })
-    .then((res) => res.json())
-    .then((data) => {
-        let responseMessage = data.message;
-        if(responseMessage === 'request sent successfully'){
-            loader.style.display = 'none';
-            console.log(data);
-        }else if(responseMessage === 'Request already exists'){
-            loader.style.display = 'none';
-            Alert.render('Request already exists!');
-        }else{
-            window.location.href = 'index.html';
-        }
-    })
-    .catch(error => {
-        console.error(error);
-        loader.style.display = 'none';
-        Alert.render('No network, Please try again.');
-    });
+        .then((res) => res.json())
+        .then((data) => {
+            let responseMessage = data.message;
+            if(responseMessage === 'request sent successfully'){
+                loader.style.display = 'none';
+                Alert.render('Request sent successfully!');
+            }else if(responseMessage === 'Request already exists'){
+                loader.style.display = 'none';
+                Alert.render('Request already exists!');
+            }else{
+                goToLogin();
+            }
+        })
+        .catch(() => {
+            showNoNetwork(loader);
+        });
 
 }
