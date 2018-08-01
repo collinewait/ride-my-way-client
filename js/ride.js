@@ -180,15 +180,17 @@ function getRideRequests(){
                                 <td>${request.passenger_name}</td>
                                 <td>${request.request_status}</td>
                                 <td>
-                                    <button type="button" data-acceptId="${request.request_id}" class="accept">Accept</button>
+                                    <button type="button" data-acceptid="${request.request_id}" class="accept">Accept</button>
                                 </td>
                                 <td>
-                                    <button type="button" data-rejectId="${request.request_id}" class="reject">Reject</button>
+                                    <button type="button" data-rejectid="${request.request_id}" class="reject">Reject</button>
                                 </td>
                             </tr>
                         `;
                     });
                     displayTableData(loader, 'ride_requests', RequestRows, requestsDiv);
+                    activateButtons('accept');
+                    activateButtons('reject');
                 }else{
                     noContentFound(loader, requestsDiv, requestMessage, 'No requests made on the ride yet.');
                 }
@@ -196,4 +198,17 @@ function getRideRequests(){
                 goToLogin();
             }
         });
+}
+
+function activateButtons(buttonAction){
+    const acceptRejectButtons = document.getElementsByClassName(buttonAction);
+    [].forEach.call(acceptRejectButtons, (acceptRejectButton) => {
+        acceptRejectButton.addEventListener('click', () => {
+            if (acceptRejectButton.dataset.acceptid){
+                console.log(acceptRejectButton.dataset.acceptid);
+            }else{
+                console.log(acceptRejectButton.dataset.rejectid);
+            }
+        });
+    });
 }
