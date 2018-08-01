@@ -180,10 +180,10 @@ function getRideRequests(){
                                 <td>${request.passenger_name}</td>
                                 <td>${request.request_status}</td>
                                 <td>
-                                    <button type="button" id="${request.request_id}" class="accept">Accept</button>
+                                    <button type="button" data-acceptId="${request.request_id}" class="accept">Accept</button>
                                 </td>
                                 <td>
-                                    <button type="button" id="${request.request_id}" class="reject">Reject</button>
+                                    <button type="button" data-rejectId="${request.request_id}" class="reject">Reject</button>
                                 </td>
                             </tr>
                         `;
