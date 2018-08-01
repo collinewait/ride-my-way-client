@@ -200,25 +200,23 @@ function getRideRequests(){
         });
 }
 
-function acceptRjectRequest(requestId, data){
-    fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/auth/login/', {
+function acceptRjectRequest(rideId, requestId, data){
+    fetch(`https://carpooling-ride-my-way.herokuapp.com/api/v1/users/rides/${rideId}/requests/${requestId}`, {
         method: 'PUT',
-        headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json'
-        },
+        headers: siteHeaders,
         cache: 'no-cache',
         body: JSON.stringify(data)
     })
         .then((res) => res.json())
         .then(result => {
-            if(result.status === 'success'){
-                myCookie.setCookie('auth_token', result.auth_token, 2);
-                window.location.href = 'user.html';
-            }
-            else{
-                loader.style.display = 'none';
-                Alert.render('Incorrect email address or password');
+            if(result){
+                if(data.request_status === 'Accepted'){
+                    Alert.render('Request accepted successfully');
+                }else{
+                    Alert.render('Request rejected successfully');
+                }
+            }else{
+                goToLogin();
             }
             
         })
@@ -236,16 +234,12 @@ function activateButtons(buttonAction){
                 data = {
                     "request_status": "Accepted"
                 }
-                console.log(acceptRejectButton.dataset.acceptid);
-                console.log(acceptRejectButton.dataset.acceptrid);
-                console.log(data);
+                acceptRjectRequest(acceptRejectButton.dataset.acceptrid, acceptRejectButton.dataset.acceptid, data);
             }else{
                 data = {
                     "request_status": "Rejected"
                 }
-                console.log(acceptRejectButton.dataset.rejectid);
-                console.log(acceptRejectButton.dataset.rejectrid);
-                console.log(data);
+                acceptRjectRequest(acceptRejectButton.dataset.rejectrid, acceptRejectButton.dataset.rejectid, data);
             }
         });
     });
