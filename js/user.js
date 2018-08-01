@@ -51,5 +51,3 @@ function addUser(e){
             showNoNetwork(loader);
         });
 }
-
-

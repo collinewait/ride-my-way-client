@@ -235,15 +235,43 @@ function activateButtons(buttonAction){
         acceptRejectButton.addEventListener('click', () => {
             if (acceptRejectButton.dataset.acceptid){
                 data = {
-                    "request_status": "Accepted"
-                }
+                    'request_status': 'Accepted'
+                };
                 acceptRjectRequest(acceptRejectButton.dataset.acceptrid, acceptRejectButton.dataset.acceptid, data);
             }else{
                 data = {
-                    "request_status": "Rejected"
-                }
+                    'request_status': 'Rejected'
+                };
                 acceptRjectRequest(acceptRejectButton.dataset.rejectrid, acceptRejectButton.dataset.rejectid, data);
             }
         });
     });
+}
+
+document.getElementById('log_out').addEventListener('click', logoutUser);
+
+function logoutUser(e){
+    e.preventDefault();
+    loader.style.display = 'block';
+    fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/users/logout', {
+        method: 'POST',
+        headers: siteHeaders,
+        cache: 'no-cache'
+    })
+        .then((res) => res.json())
+        .then(data => {
+            const message = 'You are logged out successfully';
+            if(data.message === message){
+                loader.style.display = 'none';
+                goToLogin();
+            }else{
+                loader.style.display = 'none';
+                goToLogin();
+            }
+            
+        })
+        .catch(() => {
+            showNoNetwork(loader);
+        });
+
 }
