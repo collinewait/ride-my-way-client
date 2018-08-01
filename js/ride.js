@@ -235,13 +235,13 @@ function activateButtons(buttonAction){
         acceptRejectButton.addEventListener('click', () => {
             if (acceptRejectButton.dataset.acceptid){
                 data = {
-                    "request_status": "Accepted"
-                }
+                    'request_status': 'Accepted'
+                };
                 acceptRjectRequest(acceptRejectButton.dataset.acceptrid, acceptRejectButton.dataset.acceptid, data);
             }else{
                 data = {
-                    "request_status": "Rejected"
-                }
+                    'request_status': 'Rejected'
+                };
                 acceptRjectRequest(acceptRejectButton.dataset.rejectrid, acceptRejectButton.dataset.rejectid, data);
             }
         });
