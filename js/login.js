@@ -34,6 +34,6 @@ function loginUser(e){
             
         })
         .catch(() => {
-            showNoNetwork();
+            showNoNetwork(loader);
         });
 }

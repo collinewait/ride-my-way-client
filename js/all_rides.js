@@ -124,21 +124,21 @@ function joinARide(){
         headers: siteHeaders,
         cache: 'no-cache'
     })
-    .then((res) => res.json())
-    .then((data) => {
-        let responseMessage = data.message;
-        if(responseMessage === 'request sent successfully'){
-            loader.style.display = 'none';
-            Alert.render('Request sent successfully!');
-        }else if(responseMessage === 'Request already exists'){
-            loader.style.display = 'none';
-            Alert.render('Request already exists!');
-        }else{
-            goToLogin();
-        }
-    })
-    .catch(() => {
-        showNoNetwork();
-    });
+        .then((res) => res.json())
+        .then((data) => {
+            let responseMessage = data.message;
+            if(responseMessage === 'request sent successfully'){
+                loader.style.display = 'none';
+                Alert.render('Request sent successfully!');
+            }else if(responseMessage === 'Request already exists'){
+                loader.style.display = 'none';
+                Alert.render('Request already exists!');
+            }else{
+                goToLogin();
+            }
+        })
+        .catch(() => {
+            showNoNetwork(loader);
+        });
 
 }

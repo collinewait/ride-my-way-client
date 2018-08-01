@@ -9,13 +9,13 @@ function addRide(e){
     e.preventDefault();
 
     let departure_location = document.getElementById('departure_location').value,
-    destination = document.getElementById('destination').value,
-    departure_date = document.getElementById('departure_date').value,
-    departure_time = document.getElementById('departure_time').value,
-    number_of_passengers = parseInt(document.getElementById('no_of_passengers').value);
+        destination = document.getElementById('destination').value,
+        departure_date = document.getElementById('departure_date').value,
+        departure_time = document.getElementById('departure_time').value,
+        number_of_passengers = parseInt(document.getElementById('no_of_passengers').value);
 
     let data = {departure_location, destination, departure_date, departure_time,
-         number_of_passengers};
+        number_of_passengers};
 
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/rides/', {
         method: 'POST',
@@ -36,7 +36,7 @@ function addRide(e){
             }
         } )
         .catch(() => {
-            showNoNetwork();
+            showNoNetwork(loader);
         });
 
 }
@@ -55,11 +55,12 @@ function getRidesTaken(){
                 if(data.requests.length > 0){
                     let ridesTaken = [];
                     data.requests.forEach(ride => {
-                    ridesTaken.push({
-                        "driver_name": ride.driver_name,
-                        "ride_id": ride.ride_id,
-                        "taken_given": "Taken"
-                        });
+                        ridesTaken.push(
+                            {
+                                'driver_name': ride.driver_name,
+                                'ride_id': ride.ride_id,
+                                'taken_given': 'Taken'
+                            });
                     });
                     getRidesGiven(ridesTaken);
                 }else{
@@ -69,7 +70,7 @@ function getRidesTaken(){
                 goToLogin();
             }
             
-        })
+        });
 }
 
 function getRidesGiven(ridesTaken){
@@ -85,10 +86,10 @@ function getRidesGiven(ridesTaken){
                 if(data.rides.length > 0){
                     let ridesGiven = [];
                     data.rides.forEach(ride => {
-                    ridesGiven.push({
-                        "driver_name": ride.driver_name,
-                        "ride_id": ride.ride_id,
-                        "taken_given": "Given"
+                        ridesGiven.push({
+                            'driver_name': ride.driver_name,
+                            'ride_id': ride.ride_id,
+                            'taken_given': 'Given'
                         });
                     });
                     let rides = [...ridesTaken, ...ridesGiven];
@@ -102,7 +103,7 @@ function getRidesGiven(ridesTaken){
                 goToLogin();
             }
             
-        })
+        });
 }
 
 function displayToUser(ridesTakenAndGiven){
@@ -146,14 +147,14 @@ function getUserRideOffers(){
                     getRideRequests();
                     
                 }else{
-                    const displayMessage = 'You have not offered rides yet. Requests can not be made.'
+                    const displayMessage = 'You have not offered rides yet. Requests can not be made.';
                     noContentFound(loader, requestsDiv, requestMessage, displayMessage);
                 }
             }else{
                 goToLogin();
             }
             
-        })
+        });
 }
 
 let selectElement = document.getElementById('ride_offer');
@@ -194,5 +195,5 @@ function getRideRequests(){
             }else{
                 goToLogin();
             }
-        })
+        });
 }

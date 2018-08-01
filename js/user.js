@@ -48,7 +48,7 @@ function addUser(e){
             }
         })
         .catch(() => {
-            showNoNetwork();
+            showNoNetwork(loader);
         });
 }
 
