@@ -142,8 +142,7 @@ function joinARide(){
             goToLogin();
         }
     })
-    .catch(error => {
-        console.error(error);
+    .catch(() => {
         loader.style.display = 'none';
         Alert.render('No network, Please try again.');
     });

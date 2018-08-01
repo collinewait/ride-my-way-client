@@ -32,8 +32,7 @@ function loginUser(e){
             }
             
         })
-        .catch(error => {
-            console.error(error);
+        .catch(() => {
             loader.style.display = 'none';
             Alert.render('Something wrong happened, Please try again.');
         });

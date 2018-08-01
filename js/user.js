@@ -46,8 +46,7 @@ function addUser(e){
                 Alert.render('You have successfully registered. You can login');
             }
         })
-        .catch(error => {
-            console.log('Failure', error);
+        .catch(() => {
             loader.style.display = 'none';
             Alert.render('Something wrong happened, Please try again.');
         });

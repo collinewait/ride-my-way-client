@@ -35,8 +35,8 @@ function addRide(e){
                 goToLogin();
             }
         } )
-        .catch(error => {
-            console.error(error);
+        .catch(() => {
+            loader.style.display = 'none';
             Alert.render('No network, Please try again.');
         });
 
@@ -180,7 +180,6 @@ function getRideRequests(){
         .then((res) => res.json())
         .then((data) => {
             const message = 'result retrieved successfully';
-            console.log(selectElement.value);
             if(data.message === message){
                 if(data.requests.length > 0){
                     let RequestRows = '';
