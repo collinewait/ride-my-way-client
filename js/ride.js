@@ -1,4 +1,4 @@
-import {myCookie} from './cookie_file.js';
+import {siteHeaders} from './reusable.js';
 import {Alert} from './dialogs.js';
 
 document.getElementById('add_ride_form').addEventListener('submit', addRide);
@@ -19,11 +19,7 @@ function addRide(e){
 
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/rides/', {
         method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json',
-            'auth_token': myCookie.getCookie('auth_token')
-        },
+        headers: siteHeaders,
         cache: 'no-cache',
         body: JSON.stringify(data)
     })
@@ -51,11 +47,7 @@ document.getElementById('all_rides_button').addEventListener('click', getRidesTa
 function getRidesTaken(){
     loader.style.display = 'block';
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/requests', {
-        headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json',
-            'auth_token': myCookie.getCookie('auth_token')
-        }
+        headers: siteHeaders
     })
         .then((res) => res.json())
         .then((data) => {
@@ -89,11 +81,7 @@ function getRidesGiven(ridesTaken){
     let ridedsMessage = document.getElementById('rides_taken_given_message');
     let ridesDiv =  document.getElementById('taken_given_div');
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/rides', {
-        headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json',
-            'auth_token': myCookie.getCookie('auth_token')
-        }
+        headers: siteHeaders
     })
         .then((res) => res.json())
         .then((data) => {
@@ -154,11 +142,7 @@ function getUserRideOffers(){
     let requestsDiv = document.getElementById('requests_div');
     requestMessage.style.display = 'none'; 
     fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/user/rides', {
-        headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json',
-            'auth_token': myCookie.getCookie('auth_token')
-        }
+        headers: siteHeaders
     })
         .then((res) => res.json())
         .then((data) => {
@@ -203,11 +187,7 @@ function getRideRequests(){
     let requestsDiv = document.getElementById('requests_div');
     requestMessage.style.display = 'none'; 
     fetch(`https://carpooling-ride-my-way.herokuapp.com/api/v1/users/rides/${selectElement.value}/requests`, {
-        headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json',
-            'auth_token': myCookie.getCookie('auth_token')
-        }
+        headers: siteHeaders
     })
         .then((res) => res.json())
         .then((data) => {
