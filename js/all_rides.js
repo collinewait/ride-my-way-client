@@ -1,5 +1,5 @@
 import {Alert} from './dialogs.js';
-import {siteHeaders, goToLogin} from './reusable.js';
+import {siteHeaders, goToLogin, showNoNetwork} from './reusable.js';
 document.getElementById('defaultOpen').addEventListener('click', getAllRides);
 let loader = document.getElementById('loader');
 
@@ -143,8 +143,7 @@ function joinARide(){
         }
     })
     .catch(() => {
-        loader.style.display = 'none';
-        Alert.render('No network, Please try again.');
+        showNoNetwork();
     });
 
 }

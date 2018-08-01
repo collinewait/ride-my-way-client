@@ -1,4 +1,5 @@
 import {Alert} from './dialogs.js';
+import {showNoNetwork} from './reusable.js';
 const password = document.getElementById('user__password');
 const confirm_password = document.getElementById('cpassword');
 let loader = document.getElementById('loader');
@@ -47,8 +48,7 @@ function addUser(e){
             }
         })
         .catch(() => {
-            loader.style.display = 'none';
-            Alert.render('No network, Please try again.');
+            showNoNetwork();
         });
 }
 

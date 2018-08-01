@@ -1,4 +1,4 @@
-import {siteHeaders, goToLogin} from './reusable.js';
+import {siteHeaders, goToLogin, showNoNetwork} from './reusable.js';
 import {Alert} from './dialogs.js';
 
 document.getElementById('add_ride_form').addEventListener('submit', addRide);
@@ -36,8 +36,7 @@ function addRide(e){
             }
         } )
         .catch(() => {
-            loader.style.display = 'none';
-            Alert.render('No network, Please try again.');
+            showNoNetwork();
         });
 
 }

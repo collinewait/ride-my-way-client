@@ -1,5 +1,6 @@
 import {Alert} from './dialogs.js';
 import {myCookie} from './cookie_file.js';
+import {showNoNetwork} from './reusable.js';
 document.getElementById('login_user').addEventListener('submit', loginUser);
 let loader = document.getElementById('loader');
 
@@ -33,7 +34,6 @@ function loginUser(e){
             
         })
         .catch(() => {
-            loader.style.display = 'none';
-            Alert.render('No network, Please try again.');
+            showNoNetwork();
         });
 }
