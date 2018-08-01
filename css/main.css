@@ -409,3 +409,8 @@ input[type=reset] {
 #tabcontent #ride_request_message{
     display: none;
 }
+
+#log_out{
+    color: #866c9b;
+    cursor: pointer;
+}
