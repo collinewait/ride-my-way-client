@@ -1,5 +1,6 @@
 import {myCookie} from './cookie_file.js';
 import {Alert} from './dialogs.js';
+
 export const siteHeaders = {
     'Accept': 'application/json',
     'Content-type': 'application/json',
@@ -13,4 +14,11 @@ export function goToLogin(){
 export function showNoNetwork(){
     loader.style.display = 'none';
     Alert.render('No network, Please try again.');
+}
+
+export function noContentFound(loadingSpinner, contentDiv, messageDisplay, message){
+    loadingSpinner.style.display = 'none';
+    contentDiv.style.display = 'none';
+    messageDisplay.innerHTML = message;
+    messageDisplay.style.display = 'block';
 }

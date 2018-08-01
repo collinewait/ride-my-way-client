@@ -1,5 +1,5 @@
 import {Alert} from './dialogs.js';
-import {siteHeaders, goToLogin, showNoNetwork} from './reusable.js';
+import {siteHeaders, goToLogin, showNoNetwork, noContentFound} from './reusable.js';
 document.getElementById('defaultOpen').addEventListener('click', getAllRides);
 let loader = document.getElementById('loader');
 
@@ -34,10 +34,7 @@ function getAllRides(){
                     allRidesDiv.style.display = 'block';
                     makeDetailsModelActive();
                 }else{
-                    loader.style.display = 'none';
-                    allRidesDiv.style.display = 'none';
-                    rideOffersMessage.innerHTML = 'No rides currently available';
-                    rideOffersMessage.style.display = 'block';
+                    noContentFound(loader, allRidesDiv, rideOffersMessage, 'No rides currently available');
                 }
             
             }else{

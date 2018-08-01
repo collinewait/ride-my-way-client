@@ -1,4 +1,4 @@
-import {siteHeaders, goToLogin, showNoNetwork} from './reusable.js';
+import {siteHeaders, goToLogin, showNoNetwork, noContentFound} from './reusable.js';
 import {Alert} from './dialogs.js';
 
 document.getElementById('add_ride_form').addEventListener('submit', addRide);
@@ -96,10 +96,7 @@ function getRidesGiven(ridesTaken){
                 }else if(ridesTaken.length > 0){
                     displayToUser(ridesTaken);
                 }else{
-                    loader.style.display = 'none';
-                    ridesDiv.style.display = 'none'; 
-                    ridedsMessage.innerHTML = 'You have not Given or Taken rides yet';
-                    ridedsMessage.style.display = 'block';
+                    noContentFound(loader, ridesDiv, ridedsMessage, 'You have not Given or Taken rides yet');
                 }
             }else{
                 goToLogin();
@@ -153,10 +150,8 @@ function getUserRideOffers(){
                     getRideRequests();
                     
                 }else{
-                    loader.style.display = 'none';
-                    requestsDiv.style.display = 'none';
-                    requestMessage.innerHTML = 'You have not offered rides yet. Requests can not be made.';
-                    requestMessage.style.display = 'block'; 
+                    const displayMessage = 'You have not offered rides yet. Requests can not be made.'
+                    noContentFound(loader, requestsDiv, requestMessage, displayMessage);
                 }
             }else{
                 goToLogin();
@@ -200,10 +195,7 @@ function getRideRequests(){
                     document.getElementById('ride_requests').innerHTML = RequestRows;
                     requestsDiv.style.display = 'block';
                 }else{
-                    loader.style.display = 'none';
-                    requestsDiv.style.display = 'none';
-                    requestMessage.innerHTML = 'No requests made on the ride yet.';
-                    requestMessage.style.display = 'block'; 
+                    noContentFound(loader, requestsDiv, requestMessage, 'No requests made on the ride yet.');
                 }
             }else{
                 goToLogin();
