@@ -48,7 +48,7 @@ function addUser(e){
         })
         .catch(() => {
             loader.style.display = 'none';
-            Alert.render('Something wrong happened, Please try again.');
+            Alert.render('No network, Please try again.');
         });
 }
 
