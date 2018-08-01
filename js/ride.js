@@ -180,15 +180,17 @@ function getRideRequests(){
                                 <td>${request.passenger_name}</td>
                                 <td>${request.request_status}</td>
                                 <td>
-                                    <button type="button" id="${request.request_id}" class="accept">Accept</button>
+                                    <button type="button" data-acceptid="${request.request_id}" data-acceptrid = "${request.ride_id}" class="accept">Accept</button>
                                 </td>
                                 <td>
-                                    <button type="button" id="${request.request_id}" class="reject">Reject</button>
+                                    <button type="button" data-rejectid="${request.request_id}" data-rejectrid = "${request.ride_id}" class="reject">Reject</button>
                                 </td>
                             </tr>
                         `;
                     });
                     displayTableData(loader, 'ride_requests', RequestRows, requestsDiv);
+                    activateButtons('accept');
+                    activateButtons('reject');
                 }else{
                     noContentFound(loader, requestsDiv, requestMessage, 'No requests made on the ride yet.');
                 }
@@ -196,4 +198,52 @@ function getRideRequests(){
                 goToLogin();
             }
         });
+}
+
+function acceptRjectRequest(rideId, requestId, data){
+    loader.style.display = 'block';
+    fetch(`https://carpooling-ride-my-way.herokuapp.com/api/v1/users/rides/${rideId}/requests/${requestId}`, {
+        method: 'PUT',
+        headers: siteHeaders,
+        cache: 'no-cache',
+        body: JSON.stringify(data)
+    })
+        .then((res) => res.json())
+        .then(result => {
+            if(result){
+                if(data.request_status === 'Accepted'){
+                    loader.style.display = 'none';
+                    Alert.render('Request accepted successfully');
+                }else{
+                    loader.style.display = 'none';
+                    Alert.render('Request rejected successfully');
+                }
+            }else{
+                goToLogin();
+            }
+            
+        })
+        .catch(() => {
+            showNoNetwork(loader);
+        });
+}
+
+function activateButtons(buttonAction){
+    const acceptRejectButtons = document.getElementsByClassName(buttonAction);
+    let data = {};
+    [].forEach.call(acceptRejectButtons, (acceptRejectButton) => {
+        acceptRejectButton.addEventListener('click', () => {
+            if (acceptRejectButton.dataset.acceptid){
+                data = {
+                    "request_status": "Accepted"
+                }
+                acceptRjectRequest(acceptRejectButton.dataset.acceptrid, acceptRejectButton.dataset.acceptid, data);
+            }else{
+                data = {
+                    "request_status": "Rejected"
+                }
+                acceptRjectRequest(acceptRejectButton.dataset.rejectrid, acceptRejectButton.dataset.rejectid, data);
+            }
+        });
+    });
 }
