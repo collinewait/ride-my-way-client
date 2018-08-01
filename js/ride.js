@@ -180,10 +180,10 @@ function getRideRequests(){
                                 <td>${request.passenger_name}</td>
                                 <td>${request.request_status}</td>
                                 <td>
-                                    <button type="button" data-acceptid="${request.request_id}" class="accept">Accept</button>
+                                    <button type="button" data-acceptid="${request.request_id}" data-acceptrid = "${request.ride_id}" class="accept">Accept</button>
                                 </td>
                                 <td>
-                                    <button type="button" data-rejectid="${request.request_id}" class="reject">Reject</button>
+                                    <button type="button" data-rejectid="${request.request_id}" data-rejectrid = "${request.ride_id}" class="reject">Reject</button>
                                 </td>
                             </tr>
                         `;
@@ -200,14 +200,52 @@ function getRideRequests(){
         });
 }
 
+function acceptRjectRequest(requestId, data){
+    fetch('https://carpooling-ride-my-way.herokuapp.com/api/v1/auth/login/', {
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+        },
+        cache: 'no-cache',
+        body: JSON.stringify(data)
+    })
+        .then((res) => res.json())
+        .then(result => {
+            if(result.status === 'success'){
+                myCookie.setCookie('auth_token', result.auth_token, 2);
+                window.location.href = 'user.html';
+            }
+            else{
+                loader.style.display = 'none';
+                Alert.render('Incorrect email address or password');
+            }
+            
+        })
+        .catch(() => {
+            showNoNetwork(loader);
+        });
+}
+
 function activateButtons(buttonAction){
     const acceptRejectButtons = document.getElementsByClassName(buttonAction);
+    let data = {};
     [].forEach.call(acceptRejectButtons, (acceptRejectButton) => {
         acceptRejectButton.addEventListener('click', () => {
             if (acceptRejectButton.dataset.acceptid){
+                data = {
+                    "request_status": "Accepted"
+                }
                 console.log(acceptRejectButton.dataset.acceptid);
+                console.log(acceptRejectButton.dataset.acceptrid);
+                console.log(data);
             }else{
+                data = {
+                    "request_status": "Rejected"
+                }
                 console.log(acceptRejectButton.dataset.rejectid);
+                console.log(acceptRejectButton.dataset.rejectrid);
+                console.log(data);
             }
         });
     });
