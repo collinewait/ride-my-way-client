@@ -4,3 +4,7 @@ export const siteHeaders = {
     'Content-type': 'application/json',
     'auth_token': myCookie.getCookie('auth_token')
 }
+
+export function goToLogin(){
+    return window.location.href = 'index.html';
+}

@@ -1,5 +1,5 @@
 import {Alert} from './dialogs.js';
-import {siteHeaders} from './reusable.js';
+import {siteHeaders, goToLogin} from './reusable.js';
 document.getElementById('defaultOpen').addEventListener('click', getAllRides);
 let loader = document.getElementById('loader');
 
@@ -41,7 +41,7 @@ function getAllRides(){
                 }
             
             }else{
-                window.location.href = 'index.html';
+                goToLogin();
             }
         });
 }
@@ -113,7 +113,7 @@ function getSingleRide(rideId){
                 document.getElementById('ride_data').innerHTML = tableRow;
 
             }else{
-                window.location.href = 'index.html';
+                goToLogin();
             }
             
         });
@@ -139,7 +139,7 @@ function joinARide(){
             loader.style.display = 'none';
             Alert.render('Request already exists!');
         }else{
-            window.location.href = 'index.html';
+            goToLogin();
         }
     })
     .catch(error => {

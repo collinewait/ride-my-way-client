@@ -1,4 +1,4 @@
-import {siteHeaders} from './reusable.js';
+import {siteHeaders, goToLogin} from './reusable.js';
 import {Alert} from './dialogs.js';
 
 document.getElementById('add_ride_form').addEventListener('submit', addRide);
@@ -32,7 +32,7 @@ function addRide(e){
                 loader.style.display = 'none';
                 Alert.render('Ride already exists');
             }else{
-                window.location.href = 'index.html';
+                goToLogin();
             }
         } )
         .catch(error => {
@@ -67,7 +67,7 @@ function getRidesTaken(){
                     getRidesGiven([]);
                 }
             }else{
-                window.location.href = 'index.html';
+                goToLogin();
             }
             
         })
@@ -107,7 +107,7 @@ function getRidesGiven(ridesTaken){
                     ridedsMessage.style.display = 'block';
                 }
             }else{
-                window.location.href = 'index.html';
+                goToLogin();
             }
             
         })
@@ -168,7 +168,7 @@ function getUserRideOffers(){
                     requestMessage.style.display = 'block'; 
                 }
             }else{
-                window.location.href = 'index.html';
+                goToLogin();
             }
             
         })
@@ -220,7 +220,7 @@ function getRideRequests(){
                     requestMessage.style.display = 'block'; 
                 }
             }else{
-                window.location.href = 'index.html';
+                goToLogin();
             }
         })
         .catch(error => {
