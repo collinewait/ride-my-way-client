@@ -22,3 +22,9 @@ export function noContentFound(loadingSpinner, contentDiv, messageDisplay, messa
     messageDisplay.innerHTML = message;
     messageDisplay.style.display = 'block';
 }
+
+export function displayTableData(loadingSpinner, tBodyId, tableRows, tableDiv){
+    loadingSpinner.style.display = 'none';
+    document.getElementById(tBodyId).innerHTML = tableRows;
+    tableDiv.style.display = 'block';
+}

@@ -1,5 +1,5 @@
 import {Alert} from './dialogs.js';
-import {siteHeaders, goToLogin, showNoNetwork, noContentFound} from './reusable.js';
+import {siteHeaders, goToLogin, showNoNetwork, noContentFound, displayTableData} from './reusable.js';
 document.getElementById('defaultOpen').addEventListener('click', getAllRides);
 let loader = document.getElementById('loader');
 
@@ -29,9 +29,7 @@ function getAllRides(){
                             </tr>
                         `;
                     });
-                    loader.style.display = 'none';
-                    document.getElementById('rides_data').innerHTML = tableRows;
-                    allRidesDiv.style.display = 'block';
+                    displayTableData(loader, 'rides_data', tableRows, allRidesDiv);
                     makeDetailsModelActive();
                 }else{
                     noContentFound(loader, allRidesDiv, rideOffersMessage, 'No rides currently available');

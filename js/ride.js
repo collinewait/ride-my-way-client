@@ -1,4 +1,4 @@
-import {siteHeaders, goToLogin, showNoNetwork, noContentFound} from './reusable.js';
+import {siteHeaders, goToLogin, showNoNetwork, noContentFound, displayTableData} from './reusable.js';
 import {Alert} from './dialogs.js';
 
 document.getElementById('add_ride_form').addEventListener('submit', addRide);
@@ -117,9 +117,7 @@ function displayToUser(ridesTakenAndGiven){
         </tr>
         `;
     });
-    loader.style.display = 'none';
-    document.getElementById('rides_tbody').innerHTML = tableData;
-    ridesDiv.style.display = 'block';
+    displayTableData(loader, 'rides_tbody', tableData, ridesDiv);
 }
 
 document.getElementById('requests_button').addEventListener('click', getUserRideOffers);
@@ -144,9 +142,7 @@ function getUserRideOffers(){
                             <option value=${ride.ride_id}>Ride ${rideNumber += 1}</option>
                         `;
                     });
-                    loader.style.display = 'none';
-                    document.getElementById('ride_offer').innerHTML = rideOptions;
-                    requestsDiv.style.display = 'block';
+                    displayTableData(loader, 'ride_offer', rideOptions, requestsDiv);
                     getRideRequests();
                     
                 }else{
@@ -191,9 +187,7 @@ function getRideRequests(){
                             </tr>
                         `;
                     });
-                    loader.style.display = 'none';
-                    document.getElementById('ride_requests').innerHTML = RequestRows;
-                    requestsDiv.style.display = 'block';
+                    displayTableData(loader, 'ride_requests', RequestRows, requestsDiv);
                 }else{
                     noContentFound(loader, requestsDiv, requestMessage, 'No requests made on the ride yet.');
                 }
