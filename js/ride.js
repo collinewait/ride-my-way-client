@@ -71,10 +71,6 @@ function getRidesTaken(){
             }
             
         })
-        .catch(error => {
-            console.error(error);
-            Alert.render('No network, Please try again.');
-        });
 }
 
 function getRidesGiven(ridesTaken){
@@ -111,10 +107,6 @@ function getRidesGiven(ridesTaken){
             }
             
         })
-        .catch(error => {
-            console.error(error);
-            Alert.render('No network, Please try again.');
-        });
 }
 
 function displayToUser(ridesTakenAndGiven){
@@ -172,10 +164,6 @@ function getUserRideOffers(){
             }
             
         })
-        .catch(error => {
-            console.error(error);
-            Alert.render('No network, Please try again.');
-        });
 }
 
 let selectElement = document.getElementById('ride_offer');
@@ -223,8 +211,4 @@ function getRideRequests(){
                 goToLogin();
             }
         })
-        .catch(error => {
-            console.error(error);
-            Alert.render('No network, Please try again.');
-        });
 }
