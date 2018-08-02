@@ -392,6 +392,7 @@ input[type=reset] {
     margin: auto;
     animation: spin 1s linear infinite;
     display: none;
+    z-index: 2;
 }
 @keyframes spin{
     from{transform: rotate(0deg)}
