@@ -414,3 +414,9 @@ input[type=reset] {
 .header__logout a{
     padding: 1.5em 1.5em 0em 1.5em;
 }
+
+.sticky {
+    position: fixed;
+    top: 0%;
+    width: 96%;
+  }

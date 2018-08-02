@@ -49,6 +49,10 @@
     .forgot_password a{
       padding: 0.3em 1.5em 1.5em 1.5em
     }
+
+    .sticky{
+      width: 815px;
+    }
 }
 
 /*Log in css**/
@@ -166,7 +170,7 @@
   }
 }
 
-@media screen and (min-width: 387px) and (max-width: 539px){
+@media screen and (min-width: 387px) and (max-width: 554px){
   .tab{
     height: 57px;
   }
