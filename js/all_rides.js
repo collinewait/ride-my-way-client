@@ -23,6 +23,7 @@ function getAllRides(){
                             <tr>
                                 <td>${ride.driver_name}</td>
                                 <td>${ride.driver_id}</td>
+                                <td>${ride.number_of_passengers}</td>
                                 <td>
                                     <button class="view_details" id="${ride.ride_id}">View Details</button>
                                 </td>
