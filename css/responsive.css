@@ -165,3 +165,9 @@
     width: 620px;
   }
 }
+
+@media screen and (min-width: 387px) and (max-width: 539px){
+  .tab{
+    height: 57px;
+  }
+}
