@@ -410,3 +410,7 @@ input[type=reset] {
     color: #866c9b;
     cursor: pointer;
 }
+
+.header__logout a{
+    padding: 1.5em 1.5em 0em 1.5em;
+}
