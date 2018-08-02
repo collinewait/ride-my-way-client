@@ -8,7 +8,7 @@ export const siteHeaders = {
 };
 
 export function goToLogin(){
-    return window.location.href = 'index.html';
+    return window.location.href = 'login.html';
 }
 
 export function showNoNetwork(loadingSpinner){
