@@ -21,8 +21,8 @@ function getAllRides(){
                     data.rides.forEach(ride => {
                         tableRows += `
                             <tr>
-                                <td>${ride.driver_name}</td>
-                                <td>${ride.driver_id}</td>
+                                <td>${ride.departure_location}</td>
+                                <td>${ride.destination}</td>
                                 <td>${ride.number_of_passengers}</td>
                                 <td>
                                     <button class="view_details" id="${ride.ride_id}">View Details</button>
@@ -98,8 +98,8 @@ function getSingleRide(rideId){
 
                 let tableRow = `
                 <tr>
-                    <td>${data.ride.departure_location}</td>
-                    <td>${data.ride.destination}</td>
+                    <td>${data.ride.driver_name}</td>
+                    <td>${data.ride.driver_id}</td>
                     <td>${data.ride.departure_date}</td>
                     <td>${data.ride.departure_time}</td>
                 </tr>
