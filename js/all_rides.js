@@ -102,7 +102,6 @@ function getSingleRide(rideId){
                     <td>${data.ride.destination}</td>
                     <td>${data.ride.departure_date}</td>
                     <td>${data.ride.departure_time}</td>
-                    <td>${data.ride.number_of_passengers}</td>
                 </tr>
             `;
                 loader.style.display = 'none';
