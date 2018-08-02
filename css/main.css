@@ -152,7 +152,9 @@ a{
 
 .form_container h2, #view_requests h2, #view_offers h2, #all_rides h2{
     text-align: center;
-    color: #212121
+    color: #212121;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 
 /*
@@ -279,7 +281,7 @@ input[type=reset] {
 }/**/
 
 #driver_menu_container{
-    padding: 0% 2% 2% 2%; 
+    padding: 2%; 
 }
 
 /* The Modal (background) */
@@ -328,21 +330,15 @@ input[type=reset] {
     float: left;
 }
 
-.rides{
-    padding: 2%;
-}
 #no_of_rides_given p, #no_of_rides_taken p{
     font-weight: 900;
     color: #35424a;
+    margin: 0%;
 }
 
-#no_of_rides_taken{
-    float: right;
-    width: 50%
-}
-#no_of_rides_given{
-    float: left;
-    width: 50%;
+#no_of_rides_taken, #no_of_rides_given{
+    width: 100%;
+    margin-bottom: 1%;
 }
 
 #demo_link{

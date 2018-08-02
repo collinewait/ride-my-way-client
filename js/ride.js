@@ -1,4 +1,4 @@
-import {siteHeaders, goToLogin, showNoNetwork, noContentFound, displayTableData} from './reusable.js';
+import {siteHeaders, goToLogin, showNoNetwork, noContentFound, displayTableData, displayNumberTakenAndGiven} from './reusable.js';
 import {Alert} from './dialogs.js';
 
 document.getElementById('add_ride_form').addEventListener('submit', addRide);
@@ -52,6 +52,7 @@ function getRidesTaken(){
         .then((data) => {
             const message = 'Requests retrieved successfully';
             if(data.message === message){
+                let numberOfRidesTakenMessage = null;
                 if(data.requests.length > 0){
                     let ridesTaken = [];
                     data.requests.forEach(ride => {
@@ -62,8 +63,12 @@ function getRidesTaken(){
                                 'taken_given': 'Taken'
                             });
                     });
+                    numberOfRidesTakenMessage = `<p>Number of Rides Taken: ${data.requests.length}</p>`;
+                    displayNumberTakenAndGiven('no_of_rides_taken', numberOfRidesTakenMessage);
                     getRidesGiven(ridesTaken);
                 }else{
+                    numberOfRidesTakenMessage = '<p>Number of Rides Taken: 0</p>';
+                    displayNumberTakenAndGiven('no_of_rides_taken', numberOfRidesTakenMessage);
                     getRidesGiven([]);
                 }
             }else{
@@ -83,6 +88,7 @@ function getRidesGiven(ridesTaken){
         .then((data) => {
             const message = 'results retrieved successfully';
             if(data.message === message){
+                let numberOfRidesGivenMessage = null;
                 if(data.rides.length > 0){
                     let ridesGiven = [];
                     data.rides.forEach(ride => {
@@ -93,10 +99,16 @@ function getRidesGiven(ridesTaken){
                         });
                     });
                     let rides = [...ridesTaken, ...ridesGiven];
+                    numberOfRidesGivenMessage = `<p>Number of Rides Given: ${data.rides.length}</p>`;
+                    displayNumberTakenAndGiven('no_of_rides_given', numberOfRidesGivenMessage); 
                     displayToUser(rides);
                 }else if(ridesTaken.length > 0){
+                    numberOfRidesGivenMessage = '<p>Number of Rides Given: 0</p>';
+                    displayNumberTakenAndGiven('no_of_rides_given', numberOfRidesGivenMessage); 
                     displayToUser(ridesTaken);
                 }else{
+                    numberOfRidesGivenMessage = '<p>Number of Rides Given: 0</p>';
+                    displayNumberTakenAndGiven('no_of_rides_given', numberOfRidesGivenMessage); 
                     noContentFound(loader, ridesDiv, ridedsMessage, 'You have not Given or Taken rides yet');
                 }
             }else{

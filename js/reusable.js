@@ -28,3 +28,7 @@ export function displayTableData(loadingSpinner, tBodyId, tableRows, tableDiv){
     document.getElementById(tBodyId).innerHTML = tableRows;
     tableDiv.style.display = 'block';
 }
+
+export function displayNumberTakenAndGiven(divId, message){
+    document.getElementById(divId).innerHTML = message;
+}
