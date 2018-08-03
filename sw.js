@@ -1,4 +1,4 @@
-const rideCacheName = 'ride-cache-v4';
+const rideCacheName = 'ride-cache-v3';
 
 const ursToCatch = [
     '/',
@@ -41,7 +41,7 @@ self.addEventListener('activate', (event) => {
             );
         })
     );
-})
+});
 
 self.addEventListener('fetch', event => {
 
@@ -50,8 +50,8 @@ self.addEventListener('fetch', event => {
             .then(response => response || fetch(event.request)
                 .then(response => caches.open(rideCacheName)
                     .then(cache => {
-                    cache.put(event.request, response.clone());
-                    return response;
+                        cache.put(event.request, response.clone());
+                        return response;
                     })
                 )
             )
