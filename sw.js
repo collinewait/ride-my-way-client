@@ -1,3 +1,5 @@
+let staticCacheName = 'ride-static-v3';
+
 self.addEventListener('install', (event) => {
     const ursToCatch = [
         '/',
@@ -18,11 +20,26 @@ self.addEventListener('install', (event) => {
     ];
 
     event.waitUntil(
-        caches.open('ride-static-v1').then((cache) => {
+        caches.open(staticCacheName).then((cache) => {
             return cache.addAll(ursToCatch);
         })
     );
 });
+
+self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.filter((cacheName) => {
+                    return cacheName.startsWith('ride-') && 
+                        cacheName != staticCacheName;
+                }).map((cacheName) => {
+                    return caches.delete(cacheName);
+                })
+            );
+        })
+    );
+})
 
 self.addEventListener('fetch', (event) => {
     //Respond with an entry from the cache if there is one
