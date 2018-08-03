@@ -75,6 +75,9 @@ function getRidesTaken(){
                 goToLogin();
             }
             
+        })
+        .catch(() => {
+            showNoNetwork(loader);
         });
 }
 
@@ -115,6 +118,9 @@ function getRidesGiven(ridesTaken){
                 goToLogin();
             }
             
+        })
+        .catch(() => {
+            showNoNetwork(loader);
         });
 }
 
@@ -166,6 +172,9 @@ function getUserRideOffers(){
                 goToLogin();
             }
             
+        })
+        .catch(() => {
+            showNoNetwork(loader);
         });
 }
 
@@ -209,6 +218,9 @@ function getRideRequests(){
             }else{
                 goToLogin();
             }
+        })
+        .catch(() => {
+            showNoNetwork(loader);
         });
 }
 
