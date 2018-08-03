@@ -25,14 +25,12 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+    //Respond with an entry from the cache if there is one
+    //if there isn't, fetch from the network.
     event.respondWith(
-        fetch(event.request).then((response) => {
-            if(response.status === 404){
-                return new Response('Whoops, Not found');
-            }
-            return response;
-        }).catch(() => {
-            return new Response('That totally failed!');
+        caches.match(event.request).then((response) => {
+            if(response) return response;
+            return fetch(event.request);
         })
     );
 });
