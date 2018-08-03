@@ -1,5 +1,4 @@
-const staticCacheName = 'ride-static-v3';
-const dynamicCacheName = 'dynamic-v1';
+const rideCacheName = 'ride-cache-v4';
 
 const ursToCatch = [
     '/',
@@ -23,7 +22,7 @@ self.addEventListener('install', (event) => {
  
 
     event.waitUntil(
-        caches.open(staticCacheName).then((cache) => {
+        caches.open(rideCacheName).then((cache) => {
             return cache.addAll(ursToCatch);
         })
     );
@@ -35,7 +34,7 @@ self.addEventListener('activate', (event) => {
             return Promise.all(
                 cacheNames.filter((cacheName) => {
                     return cacheName.startsWith('ride-') && 
-                        cacheName !== staticCacheName;
+                        cacheName !== rideCacheName;
                 }).map((cacheName) => {
                     return caches.delete(cacheName);
                 })
@@ -44,20 +43,18 @@ self.addEventListener('activate', (event) => {
     );
 })
 
-
-//fetch cache 
 self.addEventListener('fetch', event => {
 
     event.respondWith(
         caches.match(event.request)
             .then(response => response || fetch(event.request)
-                .then(response => caches.open(dynamicCacheName)
+                .then(response => caches.open(rideCacheName)
                     .then(cache => {
                     cache.put(event.request, response.clone());
                     return response;
-                })).catch(() => {
-                    console.log('Service Worker error caching and fetching');
-                }))
+                    })
+                )
+            )
     );
 
 });
