@@ -44,7 +44,7 @@ function registerServiceWorker(){
 }
 
 // Get the header
-let header = document.getElementById("myMenu");
+let header = document.getElementById('myMenu');
 
 // Get the offset position of the navbar
 let sticky = header.offsetTop;
@@ -54,8 +54,8 @@ let sticky = header.offsetTop;
 window.onscroll = () => {
     // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
     if (window.pageYOffset > sticky) {
-        header.classList.add("sticky");
+        header.classList.add('sticky');
       } else {
-        header.classList.remove("sticky");
+        header.classList.remove('sticky');
       }
 };
