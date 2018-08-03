@@ -1,4 +1,6 @@
-let staticCacheName = 'ride-static-v3';
+const staticCacheName = 'ride-static-v3';
+const dynamicCacheName = 'dynamic-v1';
+
 const ursToCatch = [
     '/',
     '/index.html',
@@ -42,12 +44,20 @@ self.addEventListener('activate', (event) => {
     );
 })
 
-self.addEventListener('fetch', (event) => {
-    //Respond with an entry from the cache if there is one
-    //if there isn't, fetch from the network.
+
+//fetch cache 
+self.addEventListener('fetch', event => {
+
     event.respondWith(
-        caches.match(event.request).then((response) => {
-            return response || fetch(event.request);
-        })
+        caches.match(event.request)
+            .then(response => response || fetch(event.request)
+                .then(response => caches.open(dynamicCacheName)
+                    .then(cache => {
+                    cache.put(event.request, response.clone());
+                    return response;
+                })).catch(() => {
+                    console.log('Service Worker error caching and fetching');
+                }))
     );
+
 });
