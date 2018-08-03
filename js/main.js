@@ -19,6 +19,7 @@ function openDriverAction(event, driverAction) {
     document.getElementById(driverAction).style.display = 'block';
     event.className += ' active';
 
+    registerServiceWorker();
 }
 
 let offersTab = document.getElementById('defaultOpen'),
@@ -32,8 +33,15 @@ requestsTab.addEventListener('click', () => openDriverAction(requestsTab, 'view_
 addRideTab.addEventListener('click', () => openDriverAction(addRideTab, 'add_ride'));
 allRidesTab.addEventListener('click', () => openDriverAction(allRidesTab, 'all_rides'));
 
+function registerServiceWorker(){
+    if(!navigator.serviceWorker) return;
 
-
+    navigator.serviceWorker.register('./sw.js').then(() => {
+        console.log('Registration worked!');
+    }).catch(() => {
+        console.log('Registration failed!');
+    })
+}
 
 // Get the header
 let header = document.getElementById("myMenu");
