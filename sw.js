@@ -46,8 +46,7 @@ self.addEventListener('fetch', (event) => {
     //if there isn't, fetch from the network.
     event.respondWith(
         caches.match(event.request).then((response) => {
-            if(response) return response;
-            return fetch(event.request);
+            return response || fetch(event.request);
         })
     );
 });
