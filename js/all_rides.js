@@ -39,6 +39,9 @@ function getAllRides(){
             }else{
                 goToLogin();
             }
+        })
+        .catch(() => {
+            showNoNetwork(loader);
         });
 }
 
@@ -111,6 +114,9 @@ function getSingleRide(rideId){
                 goToLogin();
             }
             
+        })
+        .catch(() => {
+            showNoNetwork(loader);
         });
 
 }
